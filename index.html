@@ -310,6 +310,12 @@
 
     .card-body { padding: 22px; }
 
+    .card-restaurant {
+      font-size: 12px; font-weight: 700;
+      color: var(--rouge); letter-spacing: .5px;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+
     .card-top {
       display: flex; align-items: center;
       justify-content: space-between; margin-bottom: 8px;
@@ -702,75 +708,85 @@
 
   <div class="cards-grid">
 
-    <!-- Carte 1 -->
+    <!-- Carte 1 — Le Grill Istanbul -->
     <div class="card reveal">
-      <div class="card-badge-promo">-35%</div>
+      <div class="card-badge-promo">-27%</div>
       <div class="card-image">
-        <!-- Ajoutez votre image :
-        <img src="repas1.jpg" alt="Burger XXL">
-        -->
-        🍔
+        <img
+          src="https://images.unsplash.com/photo-1599487488170-d11ec9c172f0?w=600&auto=format&fit=crop"
+          alt="Menu Kebab Signature — Le Grill Istanbul"
+          loading="lazy"
+        />
       </div>
       <div class="card-body">
+        <div class="card-restaurant">🥙 Le Grill Istanbul</div>
         <div class="card-top">
-          <span class="card-name">Burger XXL</span>
+          <span class="card-name">Menu Kebab Signature</span>
           <div>
             <div class="card-price">6,90€</div>
-            <div class="card-price-old">10,50€</div>
+            <div class="card-price-old">9,50€</div>
           </div>
         </div>
         <p class="card-desc">
-          Double steak haché, cheddar fondu, sauce maison, salade fraîche et frites dorées. Le menu complet à prix mini.
+          Pain grillé, viande marinée, crudités fraîches et sauce blanche maison avec frites.
         </p>
-        <button class="btn-commander" onclick="commander('Burger XXL', '6,90€')">
+        <button class="btn-commander" onclick="commander('Menu Kebab Signature — Le Grill Istanbul', '6,90€')">
           🛒 Commander maintenant
         </button>
       </div>
     </div>
 
-    <!-- Carte 2 -->
+    <!-- Carte 2 — Chicken Corner -->
     <div class="card reveal">
-      <div class="card-badge-promo">-30%</div>
+      <div class="card-badge-promo">-28%</div>
       <div class="card-image">
-        <!-- <img src="repas2.jpg" alt="Pizza Solo"> -->
-        🍕
+        <img
+          src="https://images.unsplash.com/photo-1626645738196-c2a7c87a8f58?w=600&auto=format&fit=crop"
+          alt="Menu Crispy Chicken — Chicken Corner"
+          loading="lazy"
+        />
       </div>
       <div class="card-body">
+        <div class="card-restaurant">🍗 Chicken Corner</div>
         <div class="card-top">
-          <span class="card-name">Pizza Solo</span>
+          <span class="card-name">Menu Crispy Chicken</span>
           <div>
-            <div class="card-price">7,50€</div>
+            <div class="card-price">7,90€</div>
             <div class="card-price-old">10,90€</div>
           </div>
         </div>
         <p class="card-desc">
-          Pizza 30 cm garnie de mozzarella fondante, tomates fraîches, basilic et ingrédients au choix. Directement chez vous.
+          Poulet croustillant, potatoes épicées et boisson 50cl. Un menu simple et efficace.
         </p>
-        <button class="btn-commander" onclick="commander('Pizza Solo', '7,50€')">
+        <button class="btn-commander" onclick="commander('Menu Crispy Chicken — Chicken Corner', '7,90€')">
           🛒 Commander maintenant
         </button>
       </div>
     </div>
 
-    <!-- Carte 3 -->
+    <!-- Carte 3 — Casa Napoli -->
     <div class="card reveal">
-      <div class="card-badge-promo">-40%</div>
+      <div class="card-badge-promo">-24%</div>
       <div class="card-image">
-        <!-- <img src="repas3.jpg" alt="Tacos Maxi"> -->
-        🌯
+        <img
+          src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=600&auto=format&fit=crop"
+          alt="Pizza Reine Medium — Casa Napoli"
+          loading="lazy"
+        />
       </div>
       <div class="card-body">
+        <div class="card-restaurant">🍕 Casa Napoli</div>
         <div class="card-top">
-          <span class="card-name">Tacos Maxi</span>
+          <span class="card-name">Pizza Reine Medium</span>
           <div>
-            <div class="card-price">5,90€</div>
-            <div class="card-price-old">9,90€</div>
+            <div class="card-price">9,90€</div>
+            <div class="card-price-old">13,00€</div>
           </div>
         </div>
         <p class="card-desc">
-          Tacos XXL garni de viande grillée, fromage, frites, sauce fromagère maison. L'offre incontournable pour les gros appétits.
+          Sauce tomate artisanale, jambon, champignons frais et mozzarella fondante cuite au four traditionnel.
         </p>
-        <button class="btn-commander" onclick="commander('Tacos Maxi', '5,90€')">
+        <button class="btn-commander" onclick="commander('Pizza Reine Medium — Casa Napoli', '9,90€')">
           🛒 Commander maintenant
         </button>
       </div>
