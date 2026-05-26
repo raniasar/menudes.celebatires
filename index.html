@@ -1,1449 +1,1013 @@
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Les Plats des Célibataires — Mange bien. Dépense moins.</title>
-<meta name="color-scheme" content="dark">
-<meta name="theme-color" content="#0a0804">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --noir: #0a0804;
-    --noir2: #110e09;
-    --beige: #f5ede0;
-    --beige2: #ede0cb;
-    --orange: #e8621a;
-    --orange2: #f07c35;
-    --dore: #c9a84c;
-    --dore2: #e2c06e;
-    --blanc: #faf6f0;
-    --gris: #9e9080;
-    --glass: rgba(255,255,255,0.04);
-    --glass2: rgba(255,255,255,0.08);
-    --border: rgba(255,255,255,0.07);
-  }
-  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-  html { scroll-behavior:smooth; color-scheme: dark; }
-  body {
-    background: var(--noir);
-    color: var(--beige);
-    font-family: 'DM Sans', sans-serif;
-    font-weight: 400;
-    overflow-x: hidden;
-    cursor: none;
-    -webkit-text-size-adjust: 100%;
-  }
-  /* Force toutes les couleurs — neutralise le dark mode du navigateur */
-  a { color: inherit; text-decoration: none; }
-  a:visited { color: inherit; }
-  a:link { color: inherit; }
-  button { color: inherit; font-family: inherit; }
-  input, textarea { color: inherit; font-family: inherit; background: transparent; }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Menu du Célibataire</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
 
-/* ══════════════ CURSOR ══════════════ */
-#cursor {
-position: fixed; top:0; left:0; z-index:9999;
-pointer-events: none;
-mix-blend-mode: difference;
-}
-#cursor-dot {
-width:8px; height:8px; border-radius:50%;
-background: var(–beige);
-transform: translate(-50%,-50%);
-transition: transform .15s ease;
-}
-#cursor-ring {
-position: fixed; top:0; left:0;
-width:40px; height:40px; border-radius:50%;
-border: 1px solid rgba(245,237,224,0.5);
-transform: translate(-50%,-50%);
-transition: transform .4s cubic-bezier(.25,.46,.45,.94), width .3s, height .3s, border-color .3s;
-pointer-events: none; z-index:9998;
-}
-body:hover #cursor-ring { opacity:1; }
-a:hover ~ #cursor-ring, button:hover ~ #cursor-ring { width:60px; height:60px; }
+    :root {
+      --rouge: #E63946;
+      --rouge-dark: #c1121f;
+      --noir: #0d0d0d;
+      --blanc: #fafafa;
+      --gris: #f4f4f4;
+      --gris-texte: #666;
+      --or: #f4a261;
+      --rayon: 16px;
+    }
 
-/* ══════════════ GRAIN OVERLAY ══════════════ */
-body::before {
-content:’’;
-position:fixed; inset:0; z-index:9997;
-pointer-events:none;
-background-image: url(“data:image/svg+xml,%3Csvg viewBox=‘0 0 256 256’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cfilter id=‘noise’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.9’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3C/filter%3E%3Crect width=‘100%25’ height=‘100%25’ filter=‘url(%23noise)’ opacity=‘1’/%3E%3C/svg%3E”);
-opacity:.025;
-}
+    html { scroll-behavior: smooth; }
 
-/* ══════════════ NAVBAR ══════════════ */
-nav {
-position: fixed; top:0; left:0; right:0; z-index:1000;
-display: flex; align-items:center; justify-content:space-between;
-padding: 1.4rem 4rem;
-background: rgba(10,8,4,0.7);
-backdrop-filter: blur(24px) saturate(1.8);
-border-bottom: 1px solid var(–border);
-transition: padding .4s ease, background .4s;
-}
-nav.scrolled { padding: 1rem 4rem; background: rgba(10,8,4,0.92); }
-.nav-logo {
-font-family: ‘Playfair Display’, serif;
-font-size: 1.3rem;
-font-weight: 700;
-color: var(–beige);
-text-decoration: none;
-letter-spacing: 0.02em;
-display:flex; align-items:center; gap:.6rem;
-}
-.nav-logo span.accent { color: var(–orange); font-style:italic; }
-.nav-logo-dot { width:6px; height:6px; border-radius:50%; background:var(–orange); margin-top:2px; }
-.nav-links {
-display:flex; gap:2.5rem; list-style:none;
-}
-.nav-links a {
-color: rgba(245,237,224,0.6);
-text-decoration: none;
-font-size: .88rem;
-font-weight:500;
-letter-spacing:.04em;
-transition: color .3s;
-position:relative;
-}
-.nav-links a::after {
-content:’’; position:absolute; bottom:-4px; left:0; right:0; height:1px;
-background:var(–orange); transform:scaleX(0); transform-origin:left;
-transition:transform .3s ease;
-}
-.nav-links a:hover { color: var(–beige); }
-.nav-links a:hover::after { transform:scaleX(1); }
-.nav-cta {
-background: var(–orange);
-color: var(–blanc);
-border: none;
-padding: .75rem 1.8rem;
-border-radius: 50px;
-font-family: ‘DM Sans’, sans-serif;
-font-size: .88rem;
-font-weight: 600;
-letter-spacing:.04em;
-cursor: pointer;
-transition: background .3s, transform .2s, box-shadow .3s;
-box-shadow: 0 0 30px rgba(232,98,26,0.3);
-text-decoration:none;
-}
-.nav-cta:hover { background:var(–orange2); transform:translateY(-1px); box-shadow:0 0 40px rgba(232,98,26,0.5); }
-.hamburger { display:none; flex-direction:column; gap:5px; cursor:pointer; }
-.hamburger span { display:block; width:28px; height:2px; background:var(–beige); transition:.3s; border-radius:2px; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--blanc);
+      color: var(--noir);
+      overflow-x: hidden;
+    }
 
-/* ══════════════ HERO ══════════════ */
-.hero {
-position:relative; min-height:100vh;
-display:flex; align-items:center;
-overflow:hidden;
-padding: 0 4rem;
-}
-.hero-bg {
-position:absolute; inset:0; z-index:0;
-background: radial-gradient(ellipse 80% 80% at 60% 50%, #2a1a0a 0%, var(–noir) 70%);
-}
-.hero-bg::after {
-content:’’;
-position:absolute; inset:0;
-background: linear-gradient(to right, rgba(10,8,4,0.95) 35%, rgba(10,8,4,0.3) 100%);
-}
-.hero-img {
-position:absolute; right:-5%; top:0; bottom:0;
-width:65%; z-index:1;
-background: url(‘https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=1400&q=90’) center/cover no-repeat;
-mask-image: linear-gradient(to right, transparent 0%, black 30%, black 80%, transparent 100%);
--webkit-mask-image: linear-gradient(to right, transparent 0%, black 30%, black 80%, transparent 100%);
-animation: heroZoom 20s ease-in-out infinite alternate;
-}
-@keyframes heroZoom { from{transform:scale(1)} to{transform:scale(1.05)} }
-.hero-content { position:relative; z-index:2; max-width:620px; }
-.hero-badge {
-display:inline-flex; align-items:center; gap:.5rem;
-background: var(–glass2);
-border: 1px solid var(–border);
-backdrop-filter: blur(10px);
-padding:.45rem 1rem;
-border-radius:50px;
-font-size:.78rem;
-font-weight:500;
-color:var(–dore);
-letter-spacing:.08em;
-text-transform:uppercase;
-margin-bottom:1.8rem;
-animation: fadeUp .8s ease both;
-}
-.hero-badge-dot { width:6px; height:6px; border-radius:50%; background:var(–dore); animation:pulse 2s infinite; }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
-.hero-title {
-font-family: ‘Playfair Display’, serif;
-font-size: clamp(3rem, 6vw, 5.5rem);
-font-weight: 900;
-line-height: 1.05;
-margin-bottom: 1.4rem;
-animation: fadeUp .8s .15s ease both;
-}
-.hero-title em { font-style:italic; color:var(–orange); }
-.hero-sub {
-font-size: 1.05rem;
-color: rgba(245,237,224,0.65);
-line-height: 1.7;
-max-width:460px;
-margin-bottom: 2.5rem;
-font-weight:300;
-animation: fadeUp .8s .3s ease both;
-}
-.hero-actions {
-display:flex; gap:1rem; align-items:center;
-animation: fadeUp .8s .45s ease both;
-}
-.btn-primary {
-display:inline-flex; align-items:center; gap:.6rem;
-background: var(–orange);
-color: var(–blanc);
-padding: 1rem 2.2rem;
-border-radius: 50px;
-font-weight: 600;
-font-size:.95rem;
-text-decoration:none;
-border:none; cursor:pointer;
-transition: all .3s;
-box-shadow: 0 8px 32px rgba(232,98,26,0.4);
-letter-spacing:.02em;
-}
-.btn-primary:hover { transform:translateY(-2px); box-shadow:0 12px 40px rgba(232,98,26,0.6); background:var(–orange2); }
-.btn-primary svg { transition:transform .3s; }
-.btn-primary:hover svg { transform:translateX(3px); }
-.btn-secondary {
-display:inline-flex; align-items:center; gap:.6rem;
-color: rgba(245,237,224,0.7);
-font-size:.9rem;
-text-decoration:none;
-border:none; background:none; cursor:pointer;
-transition:color .3s;
-padding:.5rem;
-font-family:‘DM Sans’,sans-serif;
-}
-.btn-secondary:hover { color:var(–beige); }
-.btn-play {
-width:44px; height:44px; border-radius:50%;
-border:1px solid rgba(245,237,224,0.2);
-display:inline-flex; align-items:center; justify-content:center;
-transition: border-color .3s, background .3s;
-}
-.btn-secondary:hover .btn-play { border-color:var(–orange); background:rgba(232,98,26,0.1); }
-.hero-stats {
-display:flex; gap:3rem; margin-top:4rem;
-animation: fadeUp .8s .6s ease both;
-}
-.hero-stat { }
-.hero-stat-num {
-font-family: ‘Bebas Neue’, sans-serif;
-font-size: 2.4rem;
-color: var(–beige);
-line-height:1;
-}
-.hero-stat-num span { color:var(–orange); }
-.hero-stat-label { font-size:.78rem; color:var(–gris); letter-spacing:.05em; margin-top:.25rem; }
-.hero-scroll {
-position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%);
-display:flex; flex-direction:column; align-items:center; gap:.5rem;
-z-index:2;
-animation: fadeIn 1s 1s ease both;
-}
-.hero-scroll-line {
-width:1px; height:60px;
-background: linear-gradient(to bottom, transparent, var(–orange), transparent);
-animation: scrollLine 2s infinite;
-}
-@keyframes scrollLine { 0%{transform:scaleY(0);transform-origin:top} 50%{transform:scaleY(1);transform-origin:top} 51%{transform-origin:bottom} 100%{transform:scaleY(0);transform-origin:bottom} }
-.hero-scroll-text { font-size:.7rem; letter-spacing:.2em; color:var(–gris); text-transform:uppercase; }
-@keyframes fadeUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
-@keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 6%;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: 0 4px 30px rgba(0,0,0,0.08); }
 
-/* ══════════════ AVANTAGES ══════════════ */
-.avantages {
-padding: 8rem 4rem;
-background: var(–noir2);
-position:relative; overflow:hidden;
-}
-.avantages::before {
-content:’’;
-position:absolute; top:-200px; left:50%; transform:translateX(-50%);
-width:600px; height:400px; border-radius:50%;
-background: radial-gradient(ellipse, rgba(232,98,26,0.06) 0%, transparent 70%);
-pointer-events:none;
-}
-.section-label {
-display:inline-flex; align-items:center; gap:.6rem;
-color:var(–orange);
-font-size:.75rem;
-font-weight:600;
-letter-spacing:.2em;
-text-transform:uppercase;
-margin-bottom:1.2rem;
-}
-.section-label::before { content:’’; width:24px; height:1px; background:var(–orange); }
-.section-title {
-font-family:‘Playfair Display’,serif;
-font-size: clamp(2rem,4vw,3.2rem);
-font-weight:700;
-line-height:1.2;
-max-width:500px;
-margin-bottom:1rem;
-}
-.section-title em { font-style:italic; color:var(–orange); }
-.avantages-grid {
-display:grid; grid-template-columns: repeat(5, 1fr);
-gap:1.5rem;
-margin-top:4rem;
-}
-.avantage-card {
-background:var(–glass);
-border:1px solid var(–border);
-border-radius:20px;
-padding:2.2rem 1.6rem;
-text-align:center;
-backdrop-filter:blur(10px);
-transition: transform .4s cubic-bezier(.25,.46,.45,.94), background .3s, border-color .3s, box-shadow .4s;
-cursor:default;
-}
-.avantage-card:hover {
-transform:translateY(-8px);
-background:rgba(255,255,255,0.07);
-border-color:rgba(232,98,26,0.3);
-box-shadow: 0 24px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(232,98,26,0.1);
-}
-.avantage-icon {
-width:56px; height:56px; border-radius:16px;
-background: linear-gradient(135deg, rgba(232,98,26,0.2), rgba(201,168,76,0.1));
-display:flex; align-items:center; justify-content:center;
-margin:0 auto 1.4rem;
-font-size:1.6rem;
-transition:transform .3s;
-}
-.avantage-card:hover .avantage-icon { transform:scale(1.1) rotate(5deg); }
-.avantage-card h3 { font-size:1rem; font-weight:600; margin-bottom:.5rem; color:var(–beige); }
-.avantage-card p { font-size:.82rem; color:var(–gris); line-height:1.6; }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+    }
+    .logo-icon {
+      width: 42px; height: 42px;
+      background: var(--rouge);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+    .logo-text {
+      display: flex; flex-direction: column; line-height: 1.1;
+    }
+    .logo-text span:first-child {
+      font-family: 'Playfair Display', serif;
+      font-size: 15px; font-weight: 900;
+      color: var(--rouge);
+      letter-spacing: -.3px;
+    }
+    .logo-text span:last-child {
+      font-size: 10px; font-weight: 500;
+      color: var(--gris-texte);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
 
-/* ══════════════ MENU ══════════════ */
-.menu-section {
-padding:8rem 4rem;
-background:var(–noir);
-position:relative;
-}
-.menu-header {
-display:flex; justify-content:space-between; align-items:flex-end;
-margin-bottom:3rem;
-}
-.menu-tabs {
-display:flex; gap:.5rem; margin-bottom:3rem;
-border-bottom:1px solid var(–border);
-padding-bottom:0;
-}
-.menu-tab {
-background:none; border:none; cursor:pointer;
-padding:.7rem 1.4rem;
-font-family:‘DM Sans’,sans-serif;
-font-size:.88rem; font-weight:500;
-color:var(–gris);
-position:relative;
-transition:color .3s;
-border-bottom:2px solid transparent;
-margin-bottom:-1px;
-}
-.menu-tab.active { color:var(–orange); border-bottom-color:var(–orange); }
-.menu-tab:hover { color:var(–beige); }
-.menu-grid {
-display:grid; grid-template-columns:repeat(3,1fr); gap:2rem;
-}
-.menu-card {
-background:var(–noir2);
-border:1px solid var(–border);
-border-radius:24px;
-overflow:hidden;
-transition: transform .4s cubic-bezier(.25,.46,.45,.94), box-shadow .4s, border-color .3s;
-cursor:pointer;
-position:relative;
-group: card;
-}
-.menu-card:hover {
-transform:translateY(-6px);
-box-shadow:0 32px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(232,98,26,0.15);
-border-color:rgba(232,98,26,0.2);
-}
-.menu-card-img {
-width:100%; height:220px;
-object-fit:cover;
-transition:transform .6s cubic-bezier(.25,.46,.45,.94);
-background: #1a120a center/cover no-repeat;
-}
-.menu-card:hover .menu-card-img { transform:scale(1.06); }
-.menu-card-img-wrap { overflow:hidden; position:relative; }
-.menu-card-badge {
-position:absolute; top:1rem; left:1rem;
-background:rgba(10,8,4,0.8);
-backdrop-filter:blur(8px);
-border:1px solid var(–border);
-border-radius:50px;
-padding:.3rem .8rem;
-font-size:.72rem;
-font-weight:600;
-color:var(–dore);
-letter-spacing:.06em;
-}
-.menu-card-fav {
-position:absolute; top:1rem; right:1rem;
-width:34px; height:34px; border-radius:50%;
-background:rgba(10,8,4,0.8);
-backdrop-filter:blur(8px);
-border:1px solid var(–border);
-display:flex; align-items:center; justify-content:center;
-cursor:pointer; transition:background .3s, border-color .3s;
-font-size:.95rem;
-}
-.menu-card-fav:hover { background:rgba(232,98,26,0.2); border-color:var(–orange); }
-.menu-card-body { padding:1.6rem; }
-.menu-card-cat { font-size:.72rem; color:var(–orange); text-transform:uppercase; letter-spacing:.1em; font-weight:600; margin-bottom:.5rem; }
-.menu-card-name { font-family:‘Playfair Display’,serif; font-size:1.25rem; font-weight:700; margin-bottom:.6rem; color:var(–beige); }
-.menu-card-desc { font-size:.83rem; color:var(–gris); line-height:1.6; margin-bottom:1.4rem; }
-.menu-card-footer { display:flex; align-items:center; justify-content:space-between; }
-.menu-card-price { font-family:‘Bebas Neue’,sans-serif; font-size:1.8rem; color:var(–beige); line-height:1; }
-.menu-card-price sup { font-family:‘DM Sans’,sans-serif; font-size:.9rem; font-weight:600; vertical-align:super; color:var(–orange); }
-.btn-add {
-width:42px; height:42px; border-radius:50%;
-background:var(–orange);
-border:none; cursor:pointer;
-display:flex; align-items:center; justify-content:center;
-transition:background .3s, transform .2s, box-shadow .3s;
-box-shadow:0 4px 20px rgba(232,98,26,0.3);
-color:white; font-size:1.3rem; font-weight:300;
-}
-.btn-add:hover { background:var(–orange2); transform:scale(1.1); box-shadow:0 8px 28px rgba(232,98,26,0.5); }
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--noir);
+      font-size: 14px; font-weight: 500;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--rouge); }
 
-/* ══════════════ POURQUOI NOUS ══════════════ */
-.why-section {
-padding:8rem 4rem;
-background:var(–noir2);
-display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center;
-position:relative; overflow:hidden;
-}
-.why-section::before {
-content:’’;
-position:absolute; right:-200px; top:50%; transform:translateY(-50%);
-width:500px; height:500px; border-radius:50%;
-background:radial-gradient(ellipse, rgba(232,98,26,0.06) 0%, transparent 70%);
-pointer-events:none;
-}
-.why-visual {
-position:relative;
-}
-.why-img {
-width:100%; aspect-ratio:4/5;
-border-radius:24px;
-background: url(‘https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=800&q=85’) center/cover no-repeat;
-position:relative;
-}
-.why-img::after {
-content:’’;
-position:absolute; inset:0; border-radius:24px;
-background:linear-gradient(to top, rgba(10,8,4,0.6) 0%, transparent 60%);
-}
-.why-float {
-position:absolute;
-background:rgba(17,14,9,0.9);
-backdrop-filter:blur(16px);
-border:1px solid var(–border);
-border-radius:16px;
-padding:1.2rem 1.4rem;
-}
-.why-float-1 {
-bottom:2rem; left:-3rem;
-display:flex; align-items:center; gap:1rem;
-}
-.why-float-1 .icon { font-size:1.8rem; }
-.why-float-1 .text strong { display:block; font-size:1.1rem; font-weight:700; color:var(–orange); }
-.why-float-1 .text span { font-size:.78rem; color:var(–gris); }
-.why-float-2 {
-top:2rem; right:-2rem;
-display:flex; flex-direction:column; gap:.4rem;
-}
-.why-float-2 .stars { color:#f59e0b; font-size:.9rem; letter-spacing:.1em; }
-.why-float-2 strong { font-size:1.4rem; font-family:‘Bebas Neue’,sans-serif; color:var(–beige); }
-.why-float-2 span { font-size:.75rem; color:var(–gris); }
-.why-content { }
-.why-list { list-style:none; margin-top:2.5rem; display:flex; flex-direction:column; gap:1.4rem; }
-.why-item {
-display:flex; gap:1.2rem; align-items:flex-start;
-padding:1.4rem;
-background:var(–glass);
-border:1px solid var(–border);
-border-radius:16px;
-transition:border-color .3s, background .3s;
-}
-.why-item:hover { border-color:rgba(232,98,26,0.2); background:rgba(255,255,255,0.05); }
-.why-item-num {
-font-family:‘Bebas Neue’,sans-serif;
-font-size:2rem;
-color:rgba(232,98,26,0.3);
-line-height:1;
-min-width:2rem;
-transition:color .3s;
-}
-.why-item:hover .why-item-num { color:var(–orange); }
-.why-item h4 { font-size:.95rem; font-weight:600; margin-bottom:.35rem; color:var(–beige); }
-.why-item p { font-size:.82rem; color:var(–gris); line-height:1.6; }
+    .nav-cta {
+      background: var(--rouge);
+      color: #fff !important;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-weight: 600 !important;
+      transition: background .2s, transform .2s !important;
+    }
+    .nav-cta:hover { background: var(--rouge-dark) !important; transform: translateY(-1px); }
 
-/* ══════════════ AVIS ══════════════ */
-.avis-section {
-padding:8rem 4rem;
-background:var(–noir);
-overflow:hidden;
-}
-.avis-track-wrap { position:relative; margin-top:4rem; }
-.avis-track-wrap::before, .avis-track-wrap::after {
-content:’’; position:absolute; top:0; bottom:0; width:200px; z-index:2; pointer-events:none;
-}
-.avis-track-wrap::before { left:0; background:linear-gradient(to right,var(–noir),transparent); }
-.avis-track-wrap::after { right:0; background:linear-gradient(to left,var(–noir),transparent); }
-.avis-track {
-display:flex; gap:2rem;
-animation: slideTrack 40s linear infinite;
-width:max-content;
-}
-.avis-track:hover { animation-play-state:paused; }
-@keyframes slideTrack { from{transform:translateX(0)} to{transform:translateX(-50%)} }
-.avis-card {
-background:var(–noir2);
-border:1px solid var(–border);
-border-radius:20px;
-padding:2rem;
-width:340px;
-flex-shrink:0;
-transition:border-color .3s, transform .3s;
-}
-.avis-card:hover { border-color:rgba(232,98,26,0.2); transform:translateY(-4px); }
-.avis-card-top { display:flex; align-items:center; gap:1rem; margin-bottom:1.2rem; }
-.avis-avatar {
-width:48px; height:48px; border-radius:50%;
-background:center/cover no-repeat;
-border:2px solid var(–border);
-flex-shrink:0;
-}
-.avis-name { font-size:.95rem; font-weight:600; color:var(–beige); }
-.avis-stars { color:#f59e0b; font-size:.85rem; letter-spacing:.1em; margin-top:.2rem; }
-.avis-text { font-size:.85rem; color:var(–gris); line-height:1.7; }
-.avis-plat { margin-top:1rem; font-size:.75rem; color:var(–orange); font-weight:500; }
+    .burger {
+      display: none;
+      flex-direction: column; gap: 5px;
+      cursor: pointer; background: none; border: none; padding: 4px;
+    }
+    .burger span {
+      display: block; width: 24px; height: 2px;
+      background: var(--noir); border-radius: 2px;
+      transition: .3s;
+    }
 
-/* ══════════════ LIVRAISON ══════════════ */
-.livraison-section {
-padding:8rem 4rem;
-background: linear-gradient(135deg, #150f06 0%, var(–noir) 100%);
-position:relative; overflow:hidden;
-}
-.livraison-section::before {
-content:’’;
-position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-width:800px; height:800px; border-radius:50%;
-background:radial-gradient(ellipse, rgba(232,98,26,0.05) 0%, transparent 70%);
-pointer-events:none;
-}
-.livraison-grid {
-display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center; margin-top:4rem;
-}
-.livraison-steps { display:flex; flex-direction:column; gap:0; }
-.livraison-step {
-display:flex; gap:1.5rem; align-items:flex-start;
-position:relative;
-}
-.livraison-step:not(:last-child)::after {
-content:’’;
-position:absolute; left:27px; top:56px;
-width:1px; height:calc(100% - 20px);
-background:linear-gradient(to bottom, var(–orange), transparent);
-}
-.livraison-step-num {
-width:54px; height:54px; border-radius:50%;
-background:rgba(232,98,26,0.15);
-border:1px solid rgba(232,98,26,0.3);
-display:flex; align-items:center; justify-content:center;
-font-family:‘Bebas Neue’,sans-serif;
-font-size:1.3rem; color:var(–orange);
-flex-shrink:0;
-margin-bottom:2rem;
-}
-.livraison-step-content { padding-top:.6rem; padding-bottom:2rem; }
-.livraison-step-content h4 { font-size:1rem; font-weight:600; color:var(–beige); margin-bottom:.4rem; }
-.livraison-step-content p { font-size:.83rem; color:var(–gris); line-height:1.6; }
-.livraison-visual {
-background:var(–noir2);
-border:1px solid var(–border);
-border-radius:28px;
-padding:3rem;
-display:flex; flex-direction:column; gap:1.5rem;
-}
-.livraison-timer {
-text-align:center;
-padding:2rem;
-background:var(–glass);
-border:1px solid var(–border);
-border-radius:20px;
-}
-.livraison-timer .big { font-family:‘Bebas Neue’,sans-serif; font-size:4rem; color:var(–orange); line-height:1; }
-.livraison-timer .label { font-size:.8rem; color:var(–gris); letter-spacing:.1em; text-transform:uppercase; margin-top:.5rem; }
-.zones { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-.zone { background:var(–glass); border:1px solid var(–border); border-radius:12px; padding:1rem 1.2rem; }
-.zone-name { font-size:.88rem; font-weight:600; color:var(–beige); margin-bottom:.2rem; }
-.zone-time { font-size:.75rem; color:var(–orange); }
+    /* ── HERO ── */
+    #accueil {
+      min-height: 100vh;
+      display: flex; align-items: center;
+      padding: 120px 6% 80px;
+      background: linear-gradient(135deg, #fff8f6 0%, #fff 60%, #fff5ed 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    #accueil::before {
+      content: '';
+      position: absolute;
+      top: -120px; right: -120px;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(230,57,70,.12) 0%, transparent 70%);
+      border-radius: 50%;
+    }
+    #accueil::after {
+      content: '';
+      position: absolute;
+      bottom: -80px; left: -80px;
+      width: 350px; height: 350px;
+      background: radial-gradient(circle, rgba(244,162,97,.1) 0%, transparent 70%);
+      border-radius: 50%;
+    }
 
-/* ══════════════ APP MOCKUP ══════════════ */
-.app-section {
-padding:8rem 4rem;
-background:var(–noir2);
-display:grid; grid-template-columns:1fr 1fr; gap:6rem; align-items:center;
-}
-.app-mockup {
-position:relative; display:flex; justify-content:center;
-}
-.phone {
-width:280px;
-background:var(–noir);
-border:2px solid rgba(255,255,255,0.1);
-border-radius:44px;
-padding:2rem 1.4rem;
-box-shadow: 0 60px 120px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.05);
-position:relative;
-animation:phoneFloat 4s ease-in-out infinite alternate;
-}
-@keyframes phoneFloat { from{transform:translateY(0)} to{transform:translateY(-16px)} }
-.phone-notch {
-width:80px; height:6px; background:rgba(255,255,255,0.1); border-radius:3px;
-margin:0 auto 1.5rem;
-}
-.phone-header {
-display:flex; align-items:center; justify-content:space-between; margin-bottom:1.2rem;
-}
-.phone-header-logo { font-family:‘Playfair Display’,serif; font-size:.8rem; color:var(–beige); }
-.phone-header-cart {
-width:28px; height:28px; border-radius:8px;
-background:var(–orange);
-display:flex; align-items:center; justify-content:center;
-font-size:.75rem;
-}
-.phone-search {
-background:rgba(255,255,255,0.06); border:1px solid var(–border);
-border-radius:12px; padding:.7rem 1rem;
-font-size:.75rem; color:var(–gris);
-margin-bottom:1.2rem;
-display:flex; align-items:center; gap:.5rem;
-}
-.phone-cats {
-display:flex; gap:.5rem; margin-bottom:1.2rem; overflow:hidden;
-}
-.phone-cat {
-padding:.4rem .9rem; border-radius:50px;
-font-size:.68rem; font-weight:600;
-white-space:nowrap;
-flex-shrink:0;
-}
-.phone-cat.active { background:var(–orange); color:white; }
-.phone-cat:not(.active) { background:rgba(255,255,255,0.06); color:var(–gris); }
-.phone-items { display:flex; flex-direction:column; gap:.8rem; }
-.phone-item {
-background:rgba(255,255,255,0.04);
-border:1px solid var(–border);
-border-radius:14px;
-padding:.8rem;
-display:flex; align-items:center; gap:.9rem;
-}
-.phone-item-img {
-width:52px; height:52px; border-radius:10px;
-background:center/cover no-repeat;
-flex-shrink:0;
-}
-.phone-item-name { font-size:.75rem; font-weight:600; color:var(–beige); margin-bottom:.2rem; }
-.phone-item-desc { font-size:.65rem; color:var(–gris); }
-.phone-item-price { font-family:‘Bebas Neue’,sans-serif; font-size:1.1rem; color:var(–orange); margin-left:auto; flex-shrink:0; }
-.phone-blur {
-position:absolute; bottom:-30px; left:50%; transform:translateX(-50%);
-width:200px; height:200px; border-radius:50%;
-background:rgba(232,98,26,0.15);
-filter:blur(60px);
-pointer-events:none;
-}
-.app-stores { display:flex; gap:1rem; margin-top:2rem; }
-.app-store-btn {
-display:flex; align-items:center; gap:.7rem;
-background:var(–glass2);
-border:1px solid var(–border);
-border-radius:14px;
-padding:.8rem 1.3rem;
-text-decoration:none;
-color:var(–beige);
-transition:border-color .3s, background .3s;
-}
-.app-store-btn:hover { border-color:rgba(232,98,26,0.3); background:rgba(255,255,255,0.08); }
-.app-store-icon { font-size:1.6rem; }
-.app-store-text small { display:block; font-size:.65rem; color:var(–gris); letter-spacing:.05em; }
-.app-store-text strong { font-size:.9rem; font-weight:600; }
+    .hero-inner {
+      display: flex; align-items: center;
+      gap: 60px; width: 100%; position: relative; z-index: 1;
+    }
 
-/* ══════════════ FAQ ══════════════ */
-.faq-section {
-padding:8rem 4rem;
-background:var(–noir);
-max-width:100%;
-}
-.faq-inner { max-width:760px; margin:4rem auto 0; }
-.faq-item {
-border-bottom:1px solid var(–border);
-overflow:hidden;
-}
-.faq-q {
-width:100%; background:none; border:none; cursor:pointer;
-display:flex; align-items:center; justify-content:space-between;
-padding:1.6rem 0;
-text-align:left;
-font-family:‘DM Sans’,sans-serif;
-font-size:1rem; font-weight:600;
-color:var(–beige);
-transition:color .3s;
-}
-.faq-q:hover { color:var(–orange); }
-.faq-icon {
-width:28px; height:28px; border-radius:50%;
-border:1px solid var(–border);
-display:flex; align-items:center; justify-content:center;
-flex-shrink:0;
-font-size:1.2rem; color:var(–gris);
-transition:transform .4s, border-color .3s, color .3s;
-}
-.faq-item.open .faq-icon { transform:rotate(45deg); border-color:var(–orange); color:var(–orange); }
-.faq-a {
-max-height:0; overflow:hidden;
-transition:max-height .5s cubic-bezier(.25,.46,.45,.94), padding .3s;
-}
-.faq-item.open .faq-a { max-height:300px; }
-.faq-a-inner { padding:0 0 1.6rem; font-size:.88rem; color:var(–gris); line-height:1.8; }
+    .hero-text { flex: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: #fff3f3; color: var(--rouge);
+      border: 1px solid rgba(230,57,70,.2);
+      padding: 8px 16px; border-radius: 50px;
+      font-size: 13px; font-weight: 600;
+      margin-bottom: 24px;
+      animation: fadeUp .6s ease both;
+    }
+    .hero-badge span { font-size: 16px; }
 
-/* ══════════════ NEWSLETTER ══════════════ */
-.newsletter-section {
-padding:6rem 4rem;
-background:var(–noir2);
-text-align:center;
-position:relative; overflow:hidden;
-}
-.newsletter-section::before {
-content:’’;
-position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-width:600px; height:300px;
-background:radial-gradient(ellipse, rgba(232,98,26,0.1) 0%, transparent 70%);
-pointer-events:none;
-}
-.newsletter-section .section-title { max-width:none; margin:0 auto 1rem; }
-.newsletter-sub { color:var(–gris); font-size:.92rem; margin-bottom:2.5rem; }
-.newsletter-form {
-display:flex; gap:.8rem; max-width:480px; margin:0 auto;
-}
-.newsletter-input {
-flex:1; background:var(–glass); border:1px solid var(–border);
-border-radius:50px; padding:.9rem 1.4rem;
-color:var(–beige); font-family:‘DM Sans’,sans-serif; font-size:.9rem;
-outline:none; transition:border-color .3s;
-}
-.newsletter-input::placeholder { color:var(–gris); }
-.newsletter-input:focus { border-color:rgba(232,98,26,0.4); }
-.newsletter-form .btn-primary { white-space:nowrap; }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(36px, 5vw, 62px);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      animation: fadeUp .6s .1s ease both;
+    }
+    h1 em { color: var(--rouge); font-style: normal; }
 
-/* ══════════════ FOOTER ══════════════ */
-footer {
-background:var(–noir);
-border-top:1px solid var(–border);
-padding:5rem 4rem 2rem;
-}
-.footer-grid {
-display:grid; grid-template-columns:2fr 1fr 1fr 1fr;
-gap:4rem; margin-bottom:4rem;
-}
-.footer-brand {}
-.footer-logo {
-font-family:‘Playfair Display’,serif;
-font-size:1.2rem; font-weight:700;
-color:var(–beige); margin-bottom:1rem;
-display:block;
-}
-.footer-logo em { color:var(–orange); font-style:italic; }
-.footer-desc { font-size:.83rem; color:var(–gris); line-height:1.7; max-width:260px; margin-bottom:1.5rem; }
-.footer-socials { display:flex; gap:.75rem; }
-.social-btn {
-width:38px; height:38px; border-radius:10px;
-border:1px solid var(–border);
-display:flex; align-items:center; justify-content:center;
-color:var(–gris); font-size:1rem; text-decoration:none;
-transition:border-color .3s, color .3s, background .3s;
-}
-.social-btn:hover { border-color:var(–orange); color:var(–orange); background:rgba(232,98,26,0.1); }
-.footer-col h4 { font-size:.88rem; font-weight:600; color:var(–beige); margin-bottom:1.2rem; letter-spacing:.04em; }
-.footer-links { list-style:none; display:flex; flex-direction:column; gap:.75rem; }
-.footer-links a { font-size:.83rem; color:var(–gris); text-decoration:none; transition:color .3s; }
-.footer-links a:hover { color:var(–orange); }
-.footer-hours { display:flex; flex-direction:column; gap:.6rem; }
-.footer-hour { display:flex; justify-content:space-between; font-size:.82rem; }
-.footer-hour .day { color:var(–gris); }
-.footer-hour .time { color:var(–beige); font-weight:500; }
-.footer-bottom {
-border-top:1px solid var(–border);
-padding-top:2rem;
-display:flex; justify-content:space-between; align-items:center;
-}
-.footer-copy { font-size:.78rem; color:var(–gris); }
-.footer-copy a { color:var(–orange); text-decoration:none; }
-.footer-legal { display:flex; gap:2rem; }
-.footer-legal a { font-size:.78rem; color:var(–gris); text-decoration:none; transition:color .3s; }
-.footer-legal a:hover { color:var(–beige); }
+    .hero-sub {
+      font-size: 17px; color: var(--gris-texte);
+      line-height: 1.7; max-width: 480px;
+      margin-bottom: 36px;
+      animation: fadeUp .6s .2s ease both;
+      font-weight: 300;
+    }
 
-/* ══════════════ SCROLL REVEAL ══════════════ */
-.reveal { opacity:0; transform:translateY(32px); transition:opacity .8s ease, transform .8s ease; }
-.reveal.visible { opacity:1; transform:none; }
-.reveal-delay-1 { transition-delay:.1s; }
-.reveal-delay-2 { transition-delay:.2s; }
-.reveal-delay-3 { transition-delay:.3s; }
-.reveal-delay-4 { transition-delay:.4s; }
-.reveal-delay-5 { transition-delay:.5s; }
+    .hero-btns {
+      display: flex; gap: 14px; flex-wrap: wrap;
+      animation: fadeUp .6s .3s ease both;
+    }
+    .btn-primary {
+      background: var(--rouge); color: #fff;
+      padding: 14px 30px; border-radius: 50px;
+      text-decoration: none; font-weight: 600; font-size: 15px;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: background .2s, transform .2s, box-shadow .2s;
+      box-shadow: 0 8px 30px rgba(230,57,70,.3);
+    }
+    .btn-primary:hover {
+      background: var(--rouge-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(230,57,70,.4);
+    }
+    .btn-secondary {
+      background: transparent; color: var(--noir);
+      padding: 14px 30px; border-radius: 50px;
+      text-decoration: none; font-weight: 600; font-size: 15px;
+      border: 2px solid rgba(0,0,0,.12);
+      transition: border-color .2s, color .2s, transform .2s;
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-secondary:hover {
+      border-color: var(--rouge); color: var(--rouge);
+      transform: translateY(-2px);
+    }
 
-/* ══════════════ MOBILE NAV ══════════════ */
-.mobile-menu {
-position:fixed; inset:0; z-index:999;
-background:rgba(10,8,4,0.98); backdrop-filter:blur(24px);
-display:flex; flex-direction:column; align-items:center; justify-content:center; gap:2.5rem;
-opacity:0; pointer-events:none;
-transition:opacity .4s;
-}
-.mobile-menu.open { opacity:1; pointer-events:all; }
-.mobile-menu a {
-font-family:‘Playfair Display’,serif;
-font-size:2rem; font-weight:700;
-color:var(–beige); text-decoration:none;
-transition:color .3s;
-}
-.mobile-menu a:hover { color:var(–orange); }
-.mobile-close {
-position:absolute; top:1.5rem; right:2rem;
-background:none; border:none; cursor:pointer;
-font-size:1.8rem; color:var(–gris); transition:color .3s;
-}
-.mobile-close:hover { color:var(–beige); }
+    .hero-stats {
+      display: flex; gap: 28px; margin-top: 48px;
+      animation: fadeUp .6s .4s ease both;
+    }
+    .stat { text-align: left; }
+    .stat-num {
+      font-family: 'Playfair Display', serif;
+      font-size: 28px; font-weight: 900; color: var(--noir);
+    }
+    .stat-num span { color: var(--rouge); }
+    .stat-label { font-size: 12px; color: var(--gris-texte); font-weight: 500; }
 
-/* ══════════════ RESPONSIVE ══════════════ */
-@media(max-width:1200px){
-.avantages-grid{grid-template-columns:repeat(3,1fr)}
-.menu-grid{grid-template-columns:repeat(2,1fr)}
-.footer-grid{grid-template-columns:1fr 1fr}
-}
-@media(max-width:900px){
-nav{padding:1.2rem 2rem}
-nav.scrolled{padding:.9rem 2rem}
-.nav-links{display:none}
-.hamburger{display:flex}
-.hero{padding:0 2rem; min-height:100svh;}
-.hero-img{width:100%;right:0;mask-image:linear-gradient(to bottom,transparent 0%,black 20%,black 70%,transparent 100%);-webkit-mask-image:linear-gradient(to bottom,transparent 0%,black 20%,black 70%,transparent 100%);}
-.hero-bg{background:rgba(10,8,4,0.6);}
-.hero-content{max-width:100%;}
-.hero-stats{gap:2rem}
-.avantages{padding:5rem 2rem}
-.avantages-grid{grid-template-columns:repeat(2,1fr)}
-.menu-section{padding:5rem 2rem}
-.menu-header{flex-direction:column;align-items:flex-start;gap:1rem}
-.menu-grid{grid-template-columns:1fr}
-.why-section{padding:5rem 2rem;grid-template-columns:1fr;gap:3rem}
-.why-float-1{left:0;bottom:1rem}
-.why-float-2{right:0}
-.avis-section{padding:5rem 2rem}
-.livraison-section{padding:5rem 2rem}
-.livraison-grid{grid-template-columns:1fr;gap:3rem}
-.app-section{padding:5rem 2rem;grid-template-columns:1fr;gap:3rem}
-.faq-section{padding:5rem 2rem}
-.newsletter-section{padding:5rem 2rem}
-.newsletter-form{flex-direction:column}
-footer{padding:4rem 2rem 2rem}
-.footer-grid{grid-template-columns:1fr}
-.footer-bottom{flex-direction:column;gap:1rem;text-align:center}
-}
-@media(max-width:600px){
-.avantages-grid{grid-template-columns:1fr}
-.hero-title{font-size:2.4rem}
-.zones{grid-template-columns:1fr}
-.hero-stats{flex-wrap:wrap;gap:1.5rem}
-}
-</style>
+    /* Image block hero */
+    .hero-image {
+      flex: 0 0 420px;
+      animation: fadeLeft .7s .2s ease both;
+    }
+    .hero-img-box {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      background: linear-gradient(145deg, #ffe8e8, #ffd6a5);
+      aspect-ratio: 4/3;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 30px 80px rgba(0,0,0,.12);
+    }
+    .hero-img-box img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .hero-img-placeholder {
+      font-size: 80px; opacity: .5;
+      flex-direction: column; display: flex; align-items: center; gap: 10px;
+    }
+    .hero-img-placeholder p {
+      font-size: 13px; font-weight: 500; color: #c07060; opacity: .8;
+    }
+    .hero-img-tag {
+      position: absolute; bottom: 20px; left: 20px;
+      background: rgba(255,255,255,.95);
+      border-radius: 12px; padding: 12px 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,.1);
+    }
+    .hero-img-tag p:first-child { font-weight: 700; font-size: 15px; }
+    .hero-img-tag p:last-child { font-size: 12px; color: var(--rouge); font-weight: 500; }
 
+    /* ── OFFRES ── */
+    #offres {
+      padding: 100px 6%;
+      background: var(--gris);
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .section-pill {
+      display: inline-block;
+      background: #fff3f3; color: var(--rouge);
+      border: 1px solid rgba(230,57,70,.2);
+      padding: 6px 18px; border-radius: 50px;
+      font-size: 12px; font-weight: 600;
+      letter-spacing: 1.5px; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+    .section-header h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(28px, 3.5vw, 44px);
+      font-weight: 900; margin-bottom: 14px;
+    }
+    .section-header p {
+      color: var(--gris-texte); font-size: 16px;
+      max-width: 500px; margin: 0 auto; font-weight: 300;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0,0,0,.06);
+      transition: transform .3s, box-shadow .3s;
+      position: relative;
+    }
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 50px rgba(0,0,0,.12);
+    }
+
+    .card-badge-promo {
+      position: absolute; top: 14px; right: 14px;
+      background: var(--rouge); color: #fff;
+      font-size: 11px; font-weight: 700;
+      padding: 5px 10px; border-radius: 50px;
+      z-index: 2; text-transform: uppercase; letter-spacing: .5px;
+    }
+
+    .card-image {
+      width: 100%;
+      aspect-ratio: 16/10;
+      background: linear-gradient(145deg, #ffe8e8, #ffd6a5);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 64px;
+      overflow: hidden;
+    }
+    .card-image img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+
+    .card-body { padding: 22px; }
+
+    .card-top {
+      display: flex; align-items: center;
+      justify-content: space-between; margin-bottom: 8px;
+    }
+    .card-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 20px; font-weight: 700;
+    }
+    .card-price {
+      font-size: 22px; font-weight: 700; color: var(--rouge);
+    }
+    .card-price-old {
+      font-size: 13px; color: #bbb;
+      text-decoration: line-through; font-weight: 400;
+    }
+
+    .card-desc {
+      font-size: 14px; color: var(--gris-texte);
+      line-height: 1.6; margin-bottom: 20px; font-weight: 300;
+    }
+
+    .btn-commander {
+      width: 100%;
+      background: var(--rouge); color: #fff;
+      border: none; padding: 13px 20px;
+      border-radius: 12px; font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      transition: background .2s, transform .2s;
+    }
+    .btn-commander:hover {
+      background: var(--rouge-dark);
+      transform: translateY(-1px);
+    }
+
+    /* ── À PROPOS ── */
+    #apropos {
+      padding: 100px 6%;
+      background: #fff;
+    }
+
+    .apropos-inner {
+      display: flex; align-items: center;
+      gap: 70px;
+    }
+
+    .apropos-visuel {
+      flex: 0 0 420px;
+      position: relative;
+    }
+    .apropos-card-main {
+      background: linear-gradient(135deg, var(--rouge), var(--rouge-dark));
+      border-radius: 24px; padding: 50px 40px;
+      color: #fff; text-align: center;
+      box-shadow: 0 20px 60px rgba(230,57,70,.3);
+    }
+    .apropos-card-main .big-emoji { font-size: 60px; margin-bottom: 20px; }
+    .apropos-card-main h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 26px; font-weight: 900;
+      margin-bottom: 10px;
+    }
+    .apropos-card-main p { font-size: 14px; opacity: .85; line-height: 1.6; }
+
+    .apropos-float {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      background: #fff;
+      border-radius: 16px; padding: 16px 20px;
+      box-shadow: 0 10px 40px rgba(0,0,0,.1);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .apropos-float .emoji { font-size: 28px; }
+    .apropos-float p:first-of-type { font-weight: 700; font-size: 14px; }
+    .apropos-float p:last-of-type { font-size: 12px; color: var(--gris-texte); }
+
+    .apropos-text { flex: 1; }
+    .apropos-text h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 900; margin-bottom: 20px; line-height: 1.2;
+    }
+    .apropos-text h2 em { color: var(--rouge); font-style: normal; }
+    .apropos-text > p {
+      font-size: 16px; color: var(--gris-texte);
+      line-height: 1.8; margin-bottom: 36px; font-weight: 300;
+    }
+
+    .avantages { display: flex; flex-direction: column; gap: 16px; }
+    .avantage {
+      display: flex; align-items: flex-start; gap: 16px;
+      padding: 16px 20px;
+      background: var(--gris); border-radius: 14px;
+      transition: background .2s;
+    }
+    .avantage:hover { background: #ffe8e8; }
+    .avantage-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      background: #fff3f3; display: flex; align-items: center;
+      justify-content: center; font-size: 18px; flex-shrink: 0;
+    }
+    .avantage h4 { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .avantage p { font-size: 13px; color: var(--gris-texte); font-weight: 300; }
+
+    /* ── CONTACT ── */
+    #contact {
+      padding: 100px 6%;
+      background: var(--gris);
+    }
+
+    .contact-inner {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 60px; align-items: start;
+    }
+
+    .contact-info h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(26px, 3vw, 40px);
+      font-weight: 900; margin-bottom: 16px;
+    }
+    .contact-info h2 em { color: var(--rouge); font-style: normal; }
+    .contact-info > p {
+      color: var(--gris-texte); font-size: 15px;
+      line-height: 1.7; margin-bottom: 36px; font-weight: 300;
+    }
+
+    .contact-items { display: flex; flex-direction: column; gap: 16px; }
+    .contact-item {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .contact-item-icon {
+      width: 46px; height: 46px;
+      background: var(--rouge); border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .contact-item h4 { font-size: 13px; font-weight: 600; margin-bottom: 2px; }
+    .contact-item p { font-size: 14px; color: var(--gris-texte); font-weight: 300; }
+
+    .socials { display: flex; gap: 12px; margin-top: 32px; }
+    .social-btn {
+      width: 44px; height: 44px;
+      border-radius: 12px; background: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; text-decoration: none;
+      box-shadow: 0 2px 10px rgba(0,0,0,.08);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .social-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,.12); }
+
+    /* Form */
+    .contact-form {
+      background: #fff;
+      border-radius: 24px;
+      padding: 40px;
+      box-shadow: 0 8px 40px rgba(0,0,0,.07);
+    }
+    .contact-form h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 700; margin-bottom: 28px;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-group { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+    .form-group label {
+      font-size: 13px; font-weight: 600; color: var(--noir);
+    }
+    .form-group input,
+    .form-group textarea,
+    .form-group select {
+      border: 2px solid #eee;
+      border-radius: 12px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-family: 'DM Sans', sans-serif;
+      color: var(--noir);
+      background: var(--gris);
+      outline: none;
+      transition: border-color .2s, background .2s;
+    }
+    .form-group input:focus,
+    .form-group textarea:focus,
+    .form-group select:focus {
+      border-color: var(--rouge);
+      background: #fff;
+    }
+    .form-group textarea { resize: vertical; min-height: 110px; }
+
+    .btn-envoyer {
+      width: 100%;
+      background: var(--rouge); color: #fff;
+      border: none; padding: 15px 20px;
+      border-radius: 12px; font-size: 15px; font-weight: 600;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      transition: background .2s, transform .2s, box-shadow .2s;
+      box-shadow: 0 6px 20px rgba(230,57,70,.25);
+    }
+    .btn-envoyer:hover {
+      background: var(--rouge-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(230,57,70,.35);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--noir);
+      color: #fff;
+      padding: 50px 6% 30px;
+    }
+    .footer-top {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      padding-bottom: 30px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      margin-bottom: 30px;
+      flex-wrap: wrap; gap: 20px;
+    }
+    .footer-logo .logo-text span:first-child { color: #fff; }
+    .footer-links { display: flex; gap: 24px; list-style: none; flex-wrap: wrap; }
+    .footer-links a {
+      color: rgba(255,255,255,.5); text-decoration: none;
+      font-size: 13px; transition: color .2s;
+    }
+    .footer-links a:hover { color: #fff; }
+    .footer-bottom {
+      display: flex; align-items: center;
+      justify-content: space-between; flex-wrap: wrap; gap: 10px;
+    }
+    .footer-bottom p { font-size: 13px; color: rgba(255,255,255,.35); }
+    .footer-bottom span { color: var(--rouge); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.5); z-index: 999;
+      align-items: center; justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #fff; border-radius: 24px;
+      padding: 40px; max-width: 420px; width: 90%;
+      text-align: center;
+      animation: popIn .3s ease both;
+    }
+    .modal .emoji { font-size: 52px; margin-bottom: 16px; }
+    .modal h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px; font-weight: 900; margin-bottom: 10px;
+    }
+    .modal p { color: var(--gris-texte); font-size: 15px; margin-bottom: 24px; }
+    .modal-close {
+      background: var(--rouge); color: #fff;
+      border: none; padding: 12px 28px;
+      border-radius: 50px; font-size: 14px; font-weight: 600;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+    }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeLeft {
+      from { opacity: 0; transform: translateX(30px); }
+      to   { opacity: 1; transform: translateX(0); }
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.9); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+
+    .reveal {
+      opacity: 0; transform: translateY(30px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      .nav-links { display: none; flex-direction: column; position: absolute;
+        top: 72px; left: 0; right: 0; background: #fff;
+        padding: 20px 6%; border-bottom: 1px solid #eee; gap: 16px; }
+      .nav-links.open { display: flex; }
+      .burger { display: flex; }
+
+      .hero-inner { flex-direction: column; text-align: center; gap: 40px; }
+      .hero-sub { max-width: 100%; }
+      .hero-btns { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .hero-image { flex: none; width: 100%; max-width: 420px; margin: 0 auto; }
+
+      .cards-grid { grid-template-columns: 1fr 1fr; }
+
+      .apropos-inner { flex-direction: column; }
+      .apropos-visuel { flex: none; width: 100%; max-width: 400px; margin: 0 auto 30px; }
+
+      .contact-inner { grid-template-columns: 1fr; }
+
+      .form-row { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .footer-top { flex-direction: column; align-items: flex-start; }
+      .footer-bottom { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
 </head>
 <body>
 
-<!-- CUSTOM CURSOR -->
-
-<div id="cursor"><div id="cursor-dot"></div></div>
-<div id="cursor-ring"></div>
-
-<!-- MOBILE MENU -->
-
-<div class="mobile-menu" id="mobileMenu">
-  <button class="mobile-close" onclick="closeMobileMenu()">✕</button>
-  <a href="#avantages" onclick="closeMobileMenu()">Avantages</a>
-  <a href="#menu" onclick="closeMobileMenu()">Menu</a>
-  <a href="#pourquoi" onclick="closeMobileMenu()">Notre histoire</a>
-  <a href="#livraison" onclick="closeMobileMenu()">Livraison</a>
-  <a href="#faq" onclick="closeMobileMenu()">FAQ</a>
-  <a href="#commander" class="btn-primary" onclick="closeMobileMenu()">Commander →</a>
-</div>
-
-<!-- NAVBAR -->
-
+<!-- ── NAV ── -->
 <nav id="navbar">
-  <a href="#" class="nav-logo">
-    <div class="nav-logo-dot"></div>
-    Les Plats des <span class="accent">Célibataires</span>
+  <a href="#accueil" class="logo">
+    <div class="logo-icon">🍽️</div>
+    <div class="logo-text">
+      <span>Menu du Célibataire</span>
+      <span>Bons plans · Restaurants</span>
+    </div>
   </a>
-  <ul class="nav-links">
-    <li><a href="#avantages">Avantages</a></li>
-    <li><a href="#menu">Menu</a></li>
-    <li><a href="#pourquoi">Notre histoire</a></li>
-    <li><a href="#livraison">Livraison</a></li>
-    <li><a href="#faq">FAQ</a></li>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#accueil">Accueil</a></li>
+    <li><a href="#offres">Nos Offres</a></li>
+    <li><a href="#apropos">À Propos</a></li>
+    <li><a href="#contact" class="nav-cta">Nous contacter</a></li>
   </ul>
-  <a href="#commander" class="nav-cta">Commander maintenant</a>
-  <div class="hamburger" onclick="openMobileMenu()" aria-label="Menu">
+  <button class="burger" id="burger" aria-label="Menu">
     <span></span><span></span><span></span>
-  </div>
+  </button>
 </nav>
 
-<!-- HERO -->
-
-<section class="hero" id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-img"></div>
-  <div class="hero-content">
-    <div class="hero-badge">
-      <div class="hero-badge-dot"></div>
-      Livraison en 30 min · Lyon &amp; alentours
-    </div>
-    <h1 class="hero-title">
-      Mange bien.<br><em>Dépense moins.</em>
-    </h1>
-    <p class="hero-sub">
-      Des plats maison généreux, livrés chaud en un clin d'œil. Parce que même seul(e), tu mérites un vrai repas.
-    </p>
-    <div class="hero-actions">
-      <a href="#menu" class="btn-primary">
-        Commander maintenant
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-      </a>
-      <a href="#pourquoi" class="btn-secondary">
-        <div class="btn-play">
-          <svg width="12" height="14" viewBox="0 0 12 14" fill="currentColor"><path d="M1 1l10 6L1 13z"/></svg>
-        </div>
-        Notre histoire
-      </a>
-    </div>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <div class="hero-stat-num">4.9<span>★</span></div>
-        <div class="hero-stat-label">Note moyenne</div>
+<!-- ── HERO ── -->
+<section id="accueil">
+  <div class="hero-inner">
+    <div class="hero-text">
+      <div class="hero-badge"><span>🔥</span> Offres exclusives partenaires</div>
+      <h1>Mange bien,<br><em>dépense moins.</em></h1>
+      <p class="hero-sub">
+        Les meilleurs menus de restaurants et fast-foods partenaires à prix réduits.
+        Découvrez des offres rien que pour vous — modernes, accessibles, livrées directement sur votre écran.
+      </p>
+      <div class="hero-btns">
+        <a href="#offres" class="btn-primary">🍕 Voir les offres</a>
+        <a href="#apropos" class="btn-secondary">En savoir plus →</a>
       </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">12<span>k+</span></div>
-        <div class="hero-stat-label">Commandes livrées</div>
-      </div>
-      <div class="hero-stat">
-        <div class="hero-stat-num">30<span>min</span></div>
-        <div class="hero-stat-label">Délai garanti</div>
-      </div>
-    </div>
-  </div>
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-    <span class="hero-scroll-text">Scroll</span>
-  </div>
-</section>
-
-<!-- AVANTAGES -->
-
-<section class="avantages" id="avantages">
-  <div class="section-label">Pourquoi nous choisir</div>
-  <h2 class="section-title reveal">Conçu pour <em>ta vie</em> de tous les jours</h2>
-  <div class="avantages-grid">
-    <div class="avantage-card reveal reveal-delay-1">
-      <div class="avantage-icon">🏠</div>
-      <h3>Cuisine maison</h3>
-      <p>Recettes authentiques préparées avec soin, comme à la maison.</p>
-    </div>
-    <div class="avantage-card reveal reveal-delay-2">
-      <div class="avantage-icon">💰</div>
-      <h3>Prix accessibles</h3>
-      <p>Des menus complets dès 6,90 €. Manger bien ne coûte pas cher.</p>
-    </div>
-    <div class="avantage-card reveal reveal-delay-3">
-      <div class="avantage-icon">⚡</div>
-      <h3>Livraison express</h3>
-      <p>Ton repas chaud à ta porte en 30 minutes, garanti ou remboursé.</p>
-    </div>
-    <div class="avantage-card reveal reveal-delay-4">
-      <div class="avantage-icon">🥬</div>
-      <h3>Produits frais</h3>
-      <p>Approvisionnement quotidien chez des producteurs locaux de confiance.</p>
-    </div>
-    <div class="avantage-card reveal reveal-delay-5">
-      <div class="avantage-icon">🍽️</div>
-      <h3>Portions généreuses</h3>
-      <p>Des assiettes bien remplies pour rassasier même les plus grands appétits.</p>
-    </div>
-  </div>
-</section>
-
-<!-- MENU -->
-
-<section class="menu-section" id="menu">
-  <div class="menu-header">
-    <div>
-      <div class="section-label">Notre carte</div>
-      <h2 class="section-title reveal">Les plats qui <em>font envie</em></h2>
-    </div>
-    <a href="#commander" class="btn-primary reveal" style="flex-shrink:0">Voir tout le menu →</a>
-  </div>
-  <div class="menu-tabs">
-    <button class="menu-tab active" onclick="filterMenu('tous', this)">Tous</button>
-    <button class="menu-tab" onclick="filterMenu('burgers', this)">🍔 Burgers</button>
-    <button class="menu-tab" onclick="filterMenu('pates', this)">🍝 Pâtes</button>
-    <button class="menu-tab" onclick="filterMenu('tacos', this)">🌮 Tacos</button>
-    <button class="menu-tab" onclick="filterMenu('maison', this)">🏠 Plats maison</button>
-    <button class="menu-tab" onclick="filterMenu('desserts', this)">🍮 Desserts</button>
-  </div>
-  <div class="menu-grid" id="menuGrid">
-    <!-- Cards injected by JS -->
-  </div>
-</section>
-
-<!-- POURQUOI NOUS -->
-
-<section class="why-section" id="pourquoi">
-  <div class="why-visual">
-    <div class="why-img"></div>
-    <div class="why-float why-float-1">
-      <div class="icon">🚀</div>
-      <div class="text">
-        <strong>+12 000</strong>
-        <span>commandes livrées</span>
-      </div>
-    </div>
-    <div class="why-float why-float-2">
-      <div class="stars">★★★★★</div>
-      <strong>4.9/5</strong>
-      <span>2 400 avis vérifiés</span>
-    </div>
-  </div>
-  <div class="why-content">
-    <div class="section-label">Notre engagement</div>
-    <h2 class="section-title reveal">Pourquoi les <em>célibataires</em> nous adorent</h2>
-    <ul class="why-list">
-      <li class="why-item reveal reveal-delay-1">
-        <span class="why-item-num">01</span>
-        <div>
-          <h4>Qualité sans compromis</h4>
-          <p>Chaque plat est préparé le jour même avec des ingrédients frais sélectionnés avec soin.</p>
+      <div class="hero-stats">
+        <div class="stat">
+          <div class="stat-num">50<span>+</span></div>
+          <div class="stat-label">Partenaires</div>
         </div>
-      </li>
-      <li class="why-item reveal reveal-delay-2">
-        <span class="why-item-num">02</span>
-        <div>
-          <h4>Commander en 2 clics</h4>
-          <p>Interface ultra simple, paiement sécurisé, confirmation instantanée. Pas de prise de tête.</p>
+        <div class="stat">
+          <div class="stat-num">-<span>40%</span></div>
+          <div class="stat-label">En moyenne</div>
         </div>
-      </li>
-      <li class="why-item reveal reveal-delay-3">
-        <span class="why-item-num">03</span>
-        <div>
-          <h4>Rapport qualité/prix imbattable</h4>
-          <p>Des menus complets à partir de 6,90 €. Moins cher qu'un fast-food, bien meilleur.</p>
-        </div>
-      </li>
-      <li class="why-item reveal reveal-delay-4">
-        <span class="why-item-num">04</span>
-        <div>
-          <h4>Support 7j/7</h4>
-          <p>Un problème ? Notre équipe répond en moins de 5 minutes, même le week-end.</p>
-        </div>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- AVIS CLIENTS -->
-
-<section class="avis-section" id="avis">
-  <div style="text-align:center">
-    <div class="section-label" style="justify-content:center">Ils nous font confiance</div>
-    <h2 class="section-title reveal" style="max-width:none;text-align:center">Ce que disent nos <em>clients</em></h2>
-  </div>
-  <div class="avis-track-wrap">
-    <div class="avis-track" id="avisTrack">
-      <!-- injected by JS -->
-    </div>
-  </div>
-</section>
-
-<!-- LIVRAISON -->
-
-<section class="livraison-section" id="livraison">
-  <div class="section-label">Livraison</div>
-  <h2 class="section-title reveal">Simple. Rapide. <em>Fiable.</em></h2>
-  <div class="livraison-grid">
-    <div class="livraison-steps">
-      <div class="livraison-step reveal">
-        <div class="livraison-step-num">1</div>
-        <div class="livraison-step-content">
-          <h4>Choisis ton plat</h4>
-          <p>Parcours notre carte et ajoute ce qui te fait envie en un clic.</p>
-        </div>
-      </div>
-      <div class="livraison-step reveal reveal-delay-1">
-        <div class="livraison-step-num">2</div>
-        <div class="livraison-step-content">
-          <h4>Paiement sécurisé</h4>
-          <p>CB, PayPal ou Apple Pay — ton choix, 100% sécurisé.</p>
-        </div>
-      </div>
-      <div class="livraison-step reveal reveal-delay-2">
-        <div class="livraison-step-num">3</div>
-        <div class="livraison-step-content">
-          <h4>On prépare</h4>
-          <p>Nos cuisiniers s'activent pour que ton plat soit parfait.</p>
-        </div>
-      </div>
-      <div class="livraison-step reveal reveal-delay-3">
-        <div class="livraison-step-num">4</div>
-        <div class="livraison-step-content">
-          <h4>Livraison à ta porte</h4>
-          <p>Chaud, emballé, livré. Régale-toi !</p>
+        <div class="stat">
+          <div class="stat-num">10k<span>+</span></div>
+          <div class="stat-label">Clients satisfaits</div>
         </div>
       </div>
     </div>
-    <div class="livraison-visual reveal reveal-delay-2">
-      <div class="livraison-timer">
-        <div class="big" id="timerDisplay">28</div>
-        <div class="label">minutes en moyenne</div>
-      </div>
-      <div class="zones">
-        <div class="zone"><div class="zone-name">Lyon Centre</div><div class="zone-time">20–30 min</div></div>
-        <div class="zone"><div class="zone-name">Villeurbanne</div><div class="zone-time">25–35 min</div></div>
-        <div class="zone"><div class="zone-name">Vaulx-en-Velin</div><div class="zone-time">30–40 min</div></div>
-        <div class="zone"><div class="zone-name">Décines</div><div class="zone-time">35–45 min</div></div>
-        <div class="zone"><div class="zone-name">Bron</div><div class="zone-time">25–35 min</div></div>
-        <div class="zone"><div class="zone-name">Caluire</div><div class="zone-time">30–40 min</div></div>
+
+    <!-- Image hero : remplacez le placeholder par votre image -->
+    <div class="hero-image">
+      <div class="hero-img-box">
+        <div class="hero-img-placeholder">
+          <span>🍔</span>
+          <p>Votre image ici</p>
+        </div>
+        <!-- Pour utiliser votre image, décommentez et adaptez cette ligne :
+        <img src="votre-image.jpg" alt="Offres repas" />
+        -->
+        <div class="hero-img-tag">
+          <p>Jusqu'à -40% sur vos repas</p>
+          <p>🎉 Offres exclusives chaque semaine</p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- APP SECTION -->
-
-<section class="app-section" id="app">
-  <div>
-    <div class="section-label">Application mobile</div>
-    <h2 class="section-title reveal">Commande où que<br>tu <em>sois</em></h2>
-    <p style="color:var(--gris);font-size:.9rem;line-height:1.7;margin-top:1.2rem;max-width:400px;margin-bottom:2rem;">
-      Notre app te permet de commander en quelques secondes, suivre ta livraison en temps réel et profiter d'offres exclusives.
-    </p>
-    <ul style="list-style:none;display:flex;flex-direction:column;gap:.8rem;margin-bottom:2rem">
-      <li style="display:flex;align-items:center;gap:.8rem;font-size:.88rem;color:var(--gris)"><span style="color:var(--orange)">✓</span>Suivi en temps réel de ta commande</li>
-      <li style="display:flex;align-items:center;gap:.8rem;font-size:.88rem;color:var(--gris)"><span style="color:var(--orange)">✓</span>Offres exclusives pour les abonnés</li>
-      <li style="display:flex;align-items:center;gap:.8rem;font-size:.88rem;color:var(--gris)"><span style="color:var(--orange)">✓</span>Programme de fidélité intégré</li>
-      <li style="display:flex;align-items:center;gap:.8rem;font-size:.88rem;color:var(--gris)"><span style="color:var(--orange)">✓</span>Notifications de statut instantanées</li>
-    </ul>
-    <div class="app-stores">
-      <a href="#" class="app-store-btn">
-        <div class="app-store-icon">🍎</div>
-        <div class="app-store-text">
-          <small>Télécharger sur</small>
-          <strong>App Store</strong>
-        </div>
-      </a>
-      <a href="#" class="app-store-btn">
-        <div class="app-store-icon">▶</div>
-        <div class="app-store-text">
-          <small>Disponible sur</small>
-          <strong>Google Play</strong>
-        </div>
-      </a>
-    </div>
+<!-- ── OFFRES ── -->
+<section id="offres">
+  <div class="section-header reveal">
+    <div class="section-pill">🍽️ Nos bons plans</div>
+    <h2>Les offres du moment</h2>
+    <p>Choisissez votre menu préféré et commandez au meilleur prix.</p>
   </div>
-  <div class="app-mockup">
-    <div class="phone">
-      <div class="phone-notch"></div>
-      <div class="phone-header">
-        <span class="phone-header-logo">Les Plats</span>
-        <div class="phone-header-cart">🛒</div>
+
+  <div class="cards-grid">
+
+    <!-- Carte 1 -->
+    <div class="card reveal">
+      <div class="card-badge-promo">-35%</div>
+      <div class="card-image">
+        <!-- Ajoutez votre image :
+        <img src="repas1.jpg" alt="Burger XXL">
+        -->
+        🍔
       </div>
-      <div class="phone-search">🔍 Chercher un plat...</div>
-      <div class="phone-cats">
-        <div class="phone-cat active">Tous</div>
-        <div class="phone-cat">🍔 Burgers</div>
-        <div class="phone-cat">🍝 Pâtes</div>
-        <div class="phone-cat">🌮 Tacos</div>
-      </div>
-      <div class="phone-items">
-        <div class="phone-item">
-          <div class="phone-item-img" style="background-image:url('https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&q=80')"></div>
+      <div class="card-body">
+        <div class="card-top">
+          <span class="card-name">Burger XXL</span>
           <div>
-            <div class="phone-item-name">Burger Maison</div>
-            <div class="phone-item-desc">Bœuf, cheddar, salade</div>
+            <div class="card-price">6,90€</div>
+            <div class="card-price-old">10,50€</div>
           </div>
-          <div class="phone-item-price">8,90€</div>
         </div>
-        <div class="phone-item">
-          <div class="phone-item-img" style="background-image:url('https://images.unsplash.com/photo-1551183053-bf91b8e6e9fb?w=200&q=80')"></div>
+        <p class="card-desc">
+          Double steak haché, cheddar fondu, sauce maison, salade fraîche et frites dorées. Le menu complet à prix mini.
+        </p>
+        <button class="btn-commander" onclick="commander('Burger XXL', '6,90€')">
+          🛒 Commander maintenant
+        </button>
+      </div>
+    </div>
+
+    <!-- Carte 2 -->
+    <div class="card reveal">
+      <div class="card-badge-promo">-30%</div>
+      <div class="card-image">
+        <!-- <img src="repas2.jpg" alt="Pizza Solo"> -->
+        🍕
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <span class="card-name">Pizza Solo</span>
           <div>
-            <div class="phone-item-name">Pasta Carbonara</div>
-            <div class="phone-item-desc">Lardons, parmesan</div>
+            <div class="card-price">7,50€</div>
+            <div class="card-price-old">10,90€</div>
           </div>
-          <div class="phone-item-price">7,50€</div>
         </div>
-        <div class="phone-item">
-          <div class="phone-item-img" style="background-image:url('https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=200&q=80')"></div>
+        <p class="card-desc">
+          Pizza 30 cm garnie de mozzarella fondante, tomates fraîches, basilic et ingrédients au choix. Directement chez vous.
+        </p>
+        <button class="btn-commander" onclick="commander('Pizza Solo', '7,50€')">
+          🛒 Commander maintenant
+        </button>
+      </div>
+    </div>
+
+    <!-- Carte 3 -->
+    <div class="card reveal">
+      <div class="card-badge-promo">-40%</div>
+      <div class="card-image">
+        <!-- <img src="repas3.jpg" alt="Tacos Maxi"> -->
+        🌯
+      </div>
+      <div class="card-body">
+        <div class="card-top">
+          <span class="card-name">Tacos Maxi</span>
           <div>
-            <div class="phone-item-name">Tacos Poulet</div>
-            <div class="phone-item-desc">Poulet mariné, sauce</div>
+            <div class="card-price">5,90€</div>
+            <div class="card-price-old">9,90€</div>
           </div>
-          <div class="phone-item-price">6,90€</div>
+        </div>
+        <p class="card-desc">
+          Tacos XXL garni de viande grillée, fromage, frites, sauce fromagère maison. L'offre incontournable pour les gros appétits.
+        </p>
+        <button class="btn-commander" onclick="commander('Tacos Maxi', '5,90€')">
+          🛒 Commander maintenant
+        </button>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── À PROPOS ── -->
+<section id="apropos">
+  <div class="apropos-inner">
+
+    <div class="apropos-visuel reveal">
+      <div class="apropos-card-main">
+        <div class="big-emoji">🎯</div>
+        <h3>Notre mission</h3>
+        <p>Connecter les jeunes et les étudiants aux meilleures offres restaurants à prix réduits, chaque jour.</p>
+      </div>
+      <div class="apropos-float">
+        <div class="emoji">🤝</div>
+        <div>
+          <p>Partenaires de confiance</p>
+          <p>Restaurants & fast-foods vérifiés</p>
         </div>
       </div>
     </div>
-    <div class="phone-blur"></div>
+
+    <div class="apropos-text reveal">
+      <div class="section-pill">📖 À propos de nous</div>
+      <h2 style="margin-top:14px">Une idée simple pour <em>manger malin.</em></h2>
+      <p>
+        Menu du Célibataire est né d'un constat : se nourrir bien ne devrait pas coûter cher.
+        Nous collaborons directement avec des restaurants partenaires pour négocier des menus exclusifs
+        à prix réduits, disponibles sur notre plateforme et nos réseaux sociaux.
+        Notre objectif est double — aider les clients à économiser sur leurs repas, et apporter
+        plus de visibilité aux restaurants.
+      </p>
+
+      <div class="avantages">
+        <div class="avantage">
+          <div class="avantage-icon">💸</div>
+          <div>
+            <h4>Économies garanties</h4>
+            <p>Jusqu'à -40% sur vos repas grâce à nos offres exclusives négociées directement.</p>
+          </div>
+        </div>
+        <div class="avantage">
+          <div class="avantage-icon">📱</div>
+          <div>
+            <h4>100% accessible</h4>
+            <p>Disponible sur Snapchat, Instagram, TikTok et notre site — toujours à portée de main.</p>
+          </div>
+        </div>
+        <div class="avantage">
+          <div class="avantage-icon">🍽️</div>
+          <div>
+            <h4>Restaurants partenaires</h4>
+            <p>Nous travaillons avec des établissements vérifiés pour garantir qualité et fiabilité.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 </section>
 
-<!-- FAQ -->
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="contact-inner">
 
-<section class="faq-section" id="faq">
-  <div style="text-align:center">
-    <div class="section-label" style="justify-content:center">Questions fréquentes</div>
-    <h2 class="section-title reveal" style="max-width:none;text-align:center">On répond à <em>tout</em></h2>
-  </div>
-  <div class="faq-inner">
-    <!-- injected by JS -->
+    <div class="contact-info reveal">
+      <div class="section-pill">✉️ Contact</div>
+      <h2 style="margin-top:14px">Parlons de votre <em>projet.</em></h2>
+      <p>
+        Vous êtes un restaurant et souhaitez rejoindre notre réseau de partenaires ?
+        Vous avez une question ou une suggestion ? On est là pour vous.
+      </p>
+
+      <div class="contact-items">
+        <div class="contact-item">
+          <div class="contact-item-icon">📧</div>
+          <div>
+            <h4>Email</h4>
+            <p>contact@menuducelibataire.fr</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📱</div>
+          <div>
+            <h4>Téléphone / WhatsApp</h4>
+            <p>+33 6 00 00 00 00</p>
+          </div>
+        </div>
+        <div class="contact-item">
+          <div class="contact-item-icon">📍</div>
+          <div>
+            <h4>Disponible sur</h4>
+            <p>France — et bientôt partout</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="socials">
+        <a href="#" class="social-btn" title="Snapchat">👻</a>
+        <a href="#" class="social-btn" title="Instagram">📸</a>
+        <a href="#" class="social-btn" title="TikTok">🎵</a>
+      </div>
+    </div>
+
+    <div class="contact-form reveal">
+      <h3>Envoyez-nous un message</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Prénom</label>
+          <input type="text" placeholder="Votre prénom" id="prenom"/>
+        </div>
+        <div class="form-group">
+          <label>Nom</label>
+          <input type="text" placeholder="Votre nom" id="nom"/>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="votre@email.com" id="email"/>
+      </div>
+      <div class="form-group">
+        <label>Vous êtes</label>
+        <select id="type">
+          <option value="">— Sélectionner —</option>
+          <option>Un client</option>
+          <option>Un restaurant partenaire</option>
+          <option>Autre</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea placeholder="Votre message..." id="message"></textarea>
+      </div>
+      <button class="btn-envoyer" onclick="envoyerMessage()">
+        ✉️ Envoyer le message
+      </button>
+    </div>
+
   </div>
 </section>
 
-<!-- NEWSLETTER -->
-
-<section class="newsletter-section" id="commander">
-  <div class="section-label" style="justify-content:center">Newsletter</div>
-  <h2 class="section-title reveal">Reçois les meilleures <em>offres</em></h2>
-  <p class="newsletter-sub">Offre de bienvenue : -15% sur ta première commande</p>
-  <div class="newsletter-form">
-    <input type="email" class="newsletter-input" placeholder="ton@email.fr">
-    <button class="btn-primary" onclick="this.textContent='✓ Inscrit !'">S'inscrire →</button>
-  </div>
-</section>
-
-<!-- FOOTER -->
-
+<!-- ── FOOTER ── -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <span class="footer-logo">Les Plats des <em>Célibataires</em></span>
-      <p class="footer-desc">La cuisine maison accessible à tous. Des plats généreux, livrés vite, à prix honnête.</p>
-      <div class="footer-socials">
-        <a href="#" class="social-btn" aria-label="Instagram">📷</a>
-        <a href="#" class="social-btn" aria-label="TikTok">🎵</a>
-        <a href="#" class="social-btn" aria-label="Facebook">📘</a>
-        <a href="#" class="social-btn" aria-label="Twitter">🐦</a>
+  <div class="footer-top">
+    <a href="#accueil" class="logo footer-logo">
+      <div class="logo-icon">🍽️</div>
+      <div class="logo-text">
+        <span>Menu du Célibataire</span>
+        <span>Bons plans · Restaurants</span>
       </div>
-    </div>
-    <div class="footer-col">
-      <h4>Navigation</h4>
-      <ul class="footer-links">
-        <li><a href="#avantages">Nos avantages</a></li>
-        <li><a href="#menu">Le menu</a></li>
-        <li><a href="#pourquoi">Notre histoire</a></li>
-        <li><a href="#livraison">Livraison</a></li>
-        <li><a href="#avis">Avis clients</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Horaires</h4>
-      <div class="footer-hours">
-        <div class="footer-hour"><span class="day">Lun – Ven</span><span class="time">11h – 23h</span></div>
-        <div class="footer-hour"><span class="day">Samedi</span><span class="time">11h – 00h</span></div>
-        <div class="footer-hour"><span class="day">Dimanche</span><span class="time">12h – 22h</span></div>
-      </div>
-    </div>
-    <div class="footer-col">
-      <h4>Contact</h4>
-      <ul class="footer-links">
-        <li><a href="mailto:bonjour@lesplatsdesceli.fr">bonjour@lesplatsdesceli.fr</a></li>
-        <li><a href="tel:+33456789012">04 56 78 90 12</a></li>
-        <li><a href="#">Signaler un problème</a></li>
-        <li><a href="#">Partenariats</a></li>
-      </ul>
-    </div>
+    </a>
+    <ul class="footer-links">
+      <li><a href="#accueil">Accueil</a></li>
+      <li><a href="#offres">Offres</a></li>
+      <li><a href="#apropos">À propos</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
   </div>
   <div class="footer-bottom">
-    <p class="footer-copy">© 2025 Les Plats des Célibataires. Fait avec ❤️ à Lyon.</p>
-    <div class="footer-legal">
-      <a href="#">Mentions légales</a>
-      <a href="#">CGV</a>
-      <a href="#">Confidentialité</a>
-    </div>
+    <p>© 2024 <span>Menu du Célibataire</span>. Tous droits réservés.</p>
+    <p>Fait avec <span>❤️</span> pour les petits budgets.</p>
   </div>
 </footer>
 
+<!-- ── MODAL COMMANDE ── -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="emoji">🎉</div>
+    <h3 id="modalTitle">Commande reçue !</h3>
+    <p id="modalDesc">Votre commande a bien été envoyée. Nous vous recontactons rapidement pour confirmer.</p>
+    <button class="modal-close" onclick="fermerModal()">Super, merci !</button>
+  </div>
+</div>
+
 <script>
-/* ── CURSOR ── */
-const dot = document.getElementById('cursor-dot');
-const ring = document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;dot.style.left=mx+'px';dot.style.top=my+'px';});
-(function loop(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(loop);})();
-document.querySelectorAll('a,button,.menu-card,.avantage-card').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ring.style.width='60px';ring.style.height='60px';ring.style.borderColor='rgba(232,98,26,0.6)';});
-  el.addEventListener('mouseleave',()=>{ring.style.width='40px';ring.style.height='40px';ring.style.borderColor='rgba(245,237,224,0.5)';});
-});
-
-/* ── NAVBAR SCROLL ── */
-window.addEventListener('scroll',()=>{
-  document.getElementById('navbar').classList.toggle('scrolled',window.scrollY>80);
-});
-
-/* ── MOBILE MENU ── */
-function openMobileMenu(){document.getElementById('mobileMenu').classList.add('open');}
-function closeMobileMenu(){document.getElementById('mobileMenu').classList.remove('open');}
-
-/* ── MENU DATA ── */
-const plats = [
-  {cat:'burgers',label:'Burger',name:'Le Classique Maison',desc:'Steak haché 180g, cheddar fondu, sauce maison, salade iceberg, tomate',price:'8,90',badge:'⭐ Best-seller',img:'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=600&q=80'},
-  {cat:'burgers',label:'Burger',name:'Le Double Comté',desc:'Double steak, comté affiné, champignons sautés, mayo truffe',price:'11,50',badge:'🔥 Nouveau',img:'https://images.unsplash.com/photo-1553979459-d2229ba7433c?w=600&q=80'},
-  {cat:'pates',label:'Pâtes',name:'Carbonara del Sole',desc:'Pâtes fraîches, lardons fumés, œuf, parmesan 18 mois, poivre noir',price:'7,50',badge:'🏠 Maison',img:'https://images.unsplash.com/photo-1551183053-bf91b8e6e9fb?w=600&q=80'},
-  {cat:'pates',label:'Pâtes',name:'Bolognaise Grand-Mère',desc:'Sauce tomate mijotée 3h, bœuf haché, basilic frais, parmesan',price:'7,90',badge:'❤️ Favori',img:'https://images.unsplash.com/photo-1598866594230-a7c12756260f?w=600&q=80'},
-  {cat:'tacos',label:'Tacos',name:'Tacos Poulet Braisé',desc:'Poulet mariné 24h, fromage fondu, sauce blanche, frites maison',price:'6,90',badge:'🌶️ Épicé',img:'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?w=600&q=80'},
-  {cat:'maison',label:'Plat maison',name:'Gratin Dauphinois',desc:'Pommes de terre, crème fraîche épaisse, gruyère, ail confit',price:'7,20',badge:'🏠 Spécialité',img:'https://images.unsplash.com/photo-1574484284002-952d92456975?w=600&q=80'},
-  {cat:'maison',label:'Plat maison',name:'Poulet Rôti & Légumes',desc:'Demi-poulet fermier rôti, légumes de saison, jus de rôti maison',price:'9,50',badge:'🥇 Premium',img:'https://images.unsplash.com/photo-1598103442097-8b74394b95c3?w=600&q=80'},
-  {cat:'desserts',label:'Dessert',name:'Fondant Chocolat',desc:'Coulant chaud, cœur coulant, glace vanille bourbon, caramel beurre salé',price:'4,50',badge:'🍫 Incontournable',img:'https://images.unsplash.com/photo-1578985545062-69928b1d9587?w=600&q=80'},
-  {cat:'desserts',label:'Dessert',name:'Tiramisù Maison',desc:'Mascarpone, café serré, biscuits cuillère imbibés, cacao en poudre',price:'4,20',badge:'🇮🇹 Authentique',img:'https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?w=600&q=80'},
-];
-
-let activeFilter='tous';
-function filterMenu(cat, btn){
-  activeFilter=cat;
-  document.querySelectorAll('.menu-tab').forEach(t=>t.classList.remove('active'));
-  btn.classList.add('active');
-  renderMenu();
-}
-function renderMenu(){
-  const grid=document.getElementById('menuGrid');
-  const filtered=activeFilter==='tous'?plats:plats.filter(p=>p.cat===activeFilter);
-  grid.innerHTML=filtered.map(p=>`
-    <div class="menu-card reveal">
-      <div class="menu-card-img-wrap">
-        <div class="menu-card-img" style="background-image:url('${p.img}')"></div>
-        <div class="menu-card-badge">${p.badge}</div>
-        <div class="menu-card-fav">🤍</div>
-      </div>
-      <div class="menu-card-body">
-        <div class="menu-card-cat">${p.label}</div>
-        <div class="menu-card-name">${p.name}</div>
-        <div class="menu-card-desc">${p.desc}</div>
-        <div class="menu-card-footer">
-          <div class="menu-card-price"><sup>€</sup>${p.price}</div>
-          <button class="btn-add" onclick="addToCart(this)" title="Ajouter">+</button>
-        </div>
-      </div>
-    </div>
-  `).join('');
-  observeReveal();
-  grid.querySelectorAll('.menu-card-fav').forEach(f=>{
-    f.addEventListener('click',e=>{f.textContent=f.textContent==='🤍'?'❤️':'🤍';e.stopPropagation();});
+  // Burger menu
+  const burger = document.getElementById('burger');
+  const navLinks = document.getElementById('navLinks');
+  burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => navLinks.classList.remove('open'));
   });
-}
 
-function addToCart(btn){
-  btn.textContent='✓';
-  btn.style.background='#22c55e';
-  setTimeout(()=>{btn.textContent='+';btn.style.background='';},1200);
-}
+  // Navbar scroll
+  window.addEventListener('scroll', () => {
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+  });
 
-renderMenu();
+  // Reveal on scroll
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 100);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(r => observer.observe(r));
 
-/* ── AVIS ── */
-const avisData=[
-  {name:'Camille R.',stars:'★★★★★',text:'Franchement je commande au moins 3 fois par semaine. Le poulet rôti c\'est divin. Livraison toujours dans les 25 min chrono.',plat:'Poulet Rôti & Légumes',avatar:'https://i.pravatar.cc/150?img=1'},
-  {name:'Antoine M.',stars:'★★★★★',text:'Enfin un service de livraison qui comprend que les célibataires ont besoin de vraie nourriture et pas de micro-plats industriels.',plat:'Carbonara del Sole',avatar:'https://i.pravatar.cc/150?img=3'},
-  {name:'Léa T.',stars:'★★★★★',text:'Le fondant chocolat… je suis incapable de passer une commande sans. Addictif. Les portions sont vraiment généreuses.',plat:'Fondant Chocolat',avatar:'https://i.pravatar.cc/150?img=5'},
-  {name:'Enzo P.',stars:'★★★★☆',text:'Super rapport qualité/prix. Le burger classique est au niveau de beaucoup de restaurants que j\'ai testés. Pour le prix c\'est imbattable.',plat:'Le Classique Maison',avatar:'https://i.pravatar.cc/150?img=7'},
-  {name:'Sarah K.',stars:'★★★★★',text:'Parfait pour mes soirs de travail tardifs. Je commande, je bosse, ça arrive chaud. Le tiramisù est le meilleur que j\'aie eu livré.',plat:'Tiramisù Maison',avatar:'https://i.pravatar.cc/150?img=9'},
-  {name:'Maxime B.',stars:'★★★★★',text:'Le gratin dauphinois, c\'est exactement ce que ma mère faisait. Je sais pas comment ils font mais c\'est parfait.',plat:'Gratin Dauphinois',avatar:'https://i.pravatar.cc/150?img=11'},
-  {name:'Julie H.',stars:'★★★★★',text:'Application top, livraison rapide, plats délicieux. -15% sur ma première commande et maintenant je suis accro. Merci et désolée.',plat:'Tacos Poulet',avatar:'https://i.pravatar.cc/150?img=13'},
-];
-const track=document.getElementById('avisTrack');
-const doubled=[...avisData,...avisData];
-track.innerHTML=doubled.map(a=>`
-  <div class="avis-card">
-    <div class="avis-card-top">
-      <div class="avis-avatar" style="background-image:url('${a.avatar}')"></div>
-      <div>
-        <div class="avis-name">${a.name}</div>
-        <div class="avis-stars">${a.stars}</div>
-      </div>
-    </div>
-    <div class="avis-text">${a.text}</div>
-    <div class="avis-plat">→ ${a.plat}</div>
-  </div>
-`).join('');
+  // Commander
+  function commander(nom, prix) {
+    document.getElementById('modalTitle').textContent = `${nom} — ${prix}`;
+    document.getElementById('modalDesc').textContent =
+      `Votre commande pour "${nom}" a été transmise ! Rendez-vous chez notre partenaire ou attendez notre confirmation par message.`;
+    document.getElementById('modalOverlay').classList.add('active');
+  }
 
-/* ── FAQ ── */
-const faqs=[
-  {q:'Quel est le délai de livraison moyen ?',a:'Notre délai moyen est de 28 minutes. Nous garantissons la livraison en 30 minutes ou moins pour les zones desservies. En cas de dépassement, nous offrons un bon de réduction sur votre prochaine commande.'},
-  {q:'Quelles zones livrez-vous ?',a:'Nous livrons actuellement Lyon Centre, Villeurbanne, Vaulx-en-Velin, Décines, Bron et Caluire. La liste s\'étend chaque mois. Entrez votre adresse sur notre site pour vérifier.'},
-  {q:'Quels modes de paiement acceptez-vous ?',a:'Carte bancaire (Visa, Mastercard, American Express), PayPal, Apple Pay et Google Pay. Tous les paiements sont 100% sécurisés et chiffrés.'},
-  {q:'Puis-je annuler ou modifier ma commande ?',a:'Oui, dans les 5 minutes suivant la commande. Passé ce délai, notre cuisine a déjà commencé la préparation et l\'annulation n\'est plus possible. Contactez nous via le chat pour toute modification urgente.'},
-  {q:'Les plats contiennent-ils des allergènes ?',a:'Chaque plat affiche la liste complète des allergènes. Nous avons des options sans gluten, sans lactose et végétariennes. En cas d\'allergie sévère, contactez-nous avant de commander.'},
-  {q:'Avez-vous un programme de fidélité ?',a:'Oui ! Chaque euro dépensé rapporte 1 point. 100 points = 5€ de réduction. Les membres Premium (dès 50 commandes) bénéficient de livraison gratuite illimitée et d\'accès prioritaire aux nouveautés.'},
-];
-document.querySelector('.faq-inner').innerHTML=faqs.map((f,i)=>`
-  <div class="faq-item">
-    <button class="faq-q" onclick="toggleFaq(this)">
-      <span>${f.q}</span>
-      <div class="faq-icon">+</div>
-    </button>
-    <div class="faq-a"><div class="faq-a-inner">${f.a}</div></div>
-  </div>
-`).join('');
+  // Envoyer message
+  function envoyerMessage() {
+    const prenom = document.getElementById('prenom').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const message = document.getElementById('message').value.trim();
+    if (!prenom || !email || !message) {
+      alert('Veuillez remplir au moins votre prénom, email et message.');
+      return;
+    }
+    document.getElementById('modalTitle').textContent = 'Message envoyé ! ✉️';
+    document.getElementById('modalDesc').textContent =
+      `Merci ${prenom} ! Votre message a bien été reçu. Nous vous répondrons à ${email} dans les plus brefs délais.`;
+    document.getElementById('modalOverlay').classList.add('active');
+    document.getElementById('prenom').value = '';
+    document.getElementById('nom').value = '';
+    document.getElementById('email').value = '';
+    document.getElementById('message').value = '';
+  }
 
-function toggleFaq(btn){
-  const item=btn.closest('.faq-item');
-  const isOpen=item.classList.contains('open');
-  document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
-  if(!isOpen)item.classList.add('open');
-}
-
-/* ── SCROLL REVEAL ── */
-function observeReveal(){
-  const obs=new IntersectionObserver(entries=>{
-    entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});
-  },{threshold:.12});
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el=>obs.observe(el));
-}
-observeReveal();
-
-/* ── TIMER ANIMATION ── */
-let timerVal=28;
-setInterval(()=>{
-  timerVal=Math.floor(22+Math.random()*12);
-  document.getElementById('timerDisplay').textContent=timerVal;
-},4000);
+  function fermerModal() {
+    document.getElementById('modalOverlay').classList.remove('active');
+  }
+  document.getElementById('modalOverlay').addEventListener('click', function(e) {
+    if (e.target === this) fermerModal();
+  });
 </script>
-
 </body>
 </html>
