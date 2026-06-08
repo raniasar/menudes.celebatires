@@ -108,7 +108,6 @@
       overflow: hidden;
     }
 
-    /* Fond décoratif radial subtil */
     #accueil::before {
       content: '';
       position: absolute;
@@ -129,7 +128,6 @@
       z-index: 1;
     }
 
-    /* ── TEXTE ── */
     .hero-text { flex: 1; max-width: 580px; }
 
     .hero-text h1 {
@@ -189,13 +187,11 @@
       transform: translateY(-2px);
     }
 
-    /* Stats */
     .hero-stats {
       display: flex;
       gap: 40px;
       animation: fadeUp .6s .3s ease both;
     }
-    .stat-item {}
     .stat-num {
       font-family: 'DM Sans', sans-serif;
       font-size: 30px;
@@ -204,7 +200,6 @@
       line-height: 1;
       margin-bottom: 4px;
     }
-    /* Couleurs distinctes pour chaque stat comme dans le screenshot */
     .stat-item:nth-child(1) .stat-num { color: #111; }
     .stat-item:nth-child(1) .stat-num span { color: var(--rouge); }
     .stat-item:nth-child(2) .stat-num { color: var(--rouge); }
@@ -217,7 +212,6 @@
       font-weight: 400;
     }
 
-    /* ── IMAGE ── */
     .hero-image {
       flex: 0 0 480px;
       animation: fadeLeft .7s .1s ease both;
@@ -236,7 +230,6 @@
       display: block;
     }
 
-    /* Floating card — sous la photo */
     .hero-float {
       display: block;
       margin-top: 14px;
@@ -387,8 +380,9 @@
     .apropos-text h2 em { color: var(--rouge); font-style: normal; }
     .apropos-text > p {
       font-size: 16px; color: var(--gris-texte);
-      line-height: 1.8; margin-bottom: 36px; font-weight: 300;
+      line-height: 1.8; margin-bottom: 20px; font-weight: 300;
     }
+    .apropos-text > p:last-of-type { margin-bottom: 36px; }
     .avantages { display: flex; flex-direction: column; gap: 16px; }
     .avantage {
       display: flex; align-items: flex-start; gap: 16px;
@@ -589,17 +583,14 @@
 <!-- ── HERO ── -->
 <section id="accueil">
   <div class="hero-inner">
-
     <div class="hero-text">
       <h1>
         <span class="rouge">Des repas de qualité à prix réduit</span><span class="noir">, pour les étudiants et jeunes actifs.</span>
       </h1>
-
       <div class="hero-btns">
         <a href="#offres" class="btn-primary">Voir les offres</a>
         <a href="#apropos" class="btn-secondary">En savoir plus →</a>
       </div>
-
       <div class="hero-stats">
         <div class="stat-item">
           <div class="stat-num">10<span>+</span></div>
@@ -625,7 +616,6 @@
         <p>🎉 Offres exclusives chaque semaine</p>
       </div>
     </div>
-
   </div>
 </section>
 
@@ -638,62 +628,67 @@
   </div>
 
   <div class="cards-grid">
+
+    <!-- ✅ MODIFICATION 1 : Saumon grillé & légumes -->
     <div class="card reveal">
       <div class="card-badge-promo">-25%</div>
       <div class="card-image">
-        <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=800&auto=format&fit=crop" alt="Smash Burger XL" loading="lazy">
+        <img src="images/saumon.jpg" alt="Saumon grillé et légumes" loading="lazy">
       </div>
       <div class="card-body">
-        <div class="card-restaurant">🍔 Smash House</div>
+        <div class="card-restaurant">🐟 Restaurant Local</div>
         <div class="card-top">
-          <span class="card-name">Smash Burger XL</span>
+          <span class="card-name">Saumon grillé & légumes</span>
           <div>
             <div class="card-price">8,90€</div>
             <div class="card-price-old">11,90€</div>
           </div>
         </div>
-        <p class="card-desc">Double steak smashé, cheddar fondant, sauce maison et frites croustillantes.</p>
-        <button class="btn-commander" onclick="ouvrirCommande('Smash Burger XL — Smash House')">🛒 Commander maintenant</button>
+        <p class="card-desc">Saumon frais, légumes rôtis, quinoa — un repas équilibré.</p>
+        <button class="btn-commander" onclick="ouvrirCommande('Saumon grillé & légumes')">🛒 Commander maintenant</button>
       </div>
     </div>
 
+    <!-- ✅ MODIFICATION 1 : Bœuf grillé & légumes -->
     <div class="card reveal">
       <div class="card-badge-promo">-30%</div>
       <div class="card-image">
-        <img src="https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&auto=format&fit=crop" alt="Pizza Reine Medium" loading="lazy">
+        <img src="images/boeuf.jpg" alt="Bœuf grillé et légumes" loading="lazy">
       </div>
       <div class="card-body">
-        <div class="card-restaurant">🍕 Casa Napoli</div>
+        <div class="card-restaurant">🥩 Grill House</div>
         <div class="card-top">
-          <span class="card-name">Pizza Reine Medium</span>
+          <span class="card-name">Bœuf grillé & légumes</span>
           <div>
             <div class="card-price">9,50€</div>
             <div class="card-price-old">13,00€</div>
           </div>
         </div>
-        <p class="card-desc">Sauce tomate artisanale, mozzarella fondante et jambon supérieur.</p>
-        <button class="btn-commander" onclick="ouvrirCommande('Pizza Reine Medium — Casa Napoli')">🛒 Commander maintenant</button>
+        <p class="card-desc">Viande grillée, légumes frais, sauce maison.</p>
+        <button class="btn-commander" onclick="ouvrirCommande('Bœuf grillé & légumes')">🛒 Commander maintenant</button>
       </div>
     </div>
 
+    <!-- ✅ MODIFICATION 1 : Bowl végétalien -->
     <div class="card reveal">
       <div class="card-badge-promo">-22%</div>
       <div class="card-image">
-        <img src="https://images.unsplash.com/photo-1626700051175-6818013e1d4f?w=800&auto=format&fit=crop" alt="Tacos Maxi" loading="lazy">
+        <img src="images/bowl.jpg" alt="Bowl végétalien" loading="lazy">
       </div>
       <div class="card-body">
-        <div class="card-restaurant">🌯 O'Tacos Street</div>
+        <div class="card-restaurant">🥗 Green Bowl</div>
         <div class="card-top">
-          <span class="card-name">Tacos Maxi</span>
+          <span class="card-name">Bowl végétalien</span>
           <div>
             <div class="card-price">7,90€</div>
             <div class="card-price-old">10,50€</div>
           </div>
         </div>
-        <p class="card-desc">Tacos gratiné avec viande au choix, sauce fromagère et frites intégrées.</p>
-        <button class="btn-commander" onclick="ouvrirCommande(&quot;Tacos Maxi — O&apos;Tacos Street&quot;)">🛒 Commander maintenant</button>
+        <p class="card-desc">Un mélange coloré de légumes, céréales et protéines végétales.</p>
+        <button class="btn-commander" onclick="ouvrirCommande('Bowl végétalien')">🛒 Commander maintenant</button>
       </div>
     </div>
+
   </div>
 </section>
 
@@ -718,13 +713,18 @@
     <div class="apropos-text reveal">
       <div class="section-pill">📖 À propos de nous</div>
       <h2 style="margin-top:14px">À propos de <em>MangerMalin.</em></h2>
+
+      <!-- ✅ MODIFICATION 4 : Nouveau texte À propos -->
       <p>
-        Parce que bien manger devrait être accessible à tous, <strong>MangerMalin.com</strong> crée des
-        partenariats avec des restaurants locaux afin de proposer des offres exclusives à prix réduits.
-        Notre objectif est double : soutenir les petites et moyennes entreprises en leur offrant
-        davantage de visibilité, tout en aidant nos utilisateurs à découvrir de bons repas sans
-        dépasser leur budget.
+        Parce que bien manger devrait être accessible à tous, MangerMalin crée des partenariats avec des restaurants locaux afin de proposer des offres exclusives à prix réduits.
       </p>
+      <p>
+        Notre mission est double : soutenir les petites et moyennes entreprises en leur offrant davantage de visibilité, tout en permettant à nos utilisateurs de profiter de repas sains, équilibrés et gourmands sans dépasser leur budget.
+      </p>
+      <p>
+        Que vous soyez étudiant, jeune actif ou simplement à la recherche de bons plans pour mieux manger au quotidien, vous trouverez sur MangerMalin des menus de qualité à prix malin.
+      </p>
+
       <div class="avantages">
         <div class="avantage">
           <div class="avantage-icon">🏷️</div>
@@ -747,6 +747,24 @@
   </div>
 </section>
 
+<!-- ✅ MODIFICATION 5 : Section Étapes de commande -->
+<section id="etapes" style="padding:100px 6%; background:#fff;">
+  <div class="section-header">
+    <div class="section-pill">📝 Comment ça marche ?</div>
+    <h2>Étapes de la commande</h2>
+  </div>
+  <div class="avantages">
+    <div class="avantage">
+      <div class="avantage-icon">1️⃣</div>
+      <div><h4>Remplissez le formulaire</h4><p>Indiquez vos informations et choisissez votre repas.</p></div>
+    </div>
+    <div class="avantage">
+      <div class="avantage-icon">2️⃣</div>
+      <div><h4>Le restaurant vous recontacte</h4><p>Confirmation de la commande, du paiement et de la livraison.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- ── CONTACT ── -->
 <section id="contact">
   <div class="contact-inner">
@@ -759,13 +777,11 @@
           <div class="contact-item-icon">📧</div>
           <div><h4>Email</h4><p>mangermalin@gmail.com</p></div>
         </div>
-        <div class="contact-item">
-          <div class="contact-item-icon">📱</div>
-          <div><h4>Téléphone / WhatsApp</h4><p>06 52 76 81 59</p></div>
-        </div>
+        <!-- ✅ MODIFICATION 3 : Bloc téléphone supprimé -->
         <div class="contact-item">
           <div class="contact-item-icon">📍</div>
-          <div><h4>Disponible sur</h4><p>France — et bientôt partout</p></div>
+          <!-- ✅ MODIFICATION 2 : Texte disponibilité mis à jour -->
+          <div><h4>Disponible sur</h4><p>Rhône-Alpes — et bientôt dans toute la France</p></div>
         </div>
       </div>
       <div class="socials">
@@ -794,9 +810,9 @@
       <div class="form-group">
         <label>Choisir un repas</label>
         <select id="repas">
-          <option>Smash Burger XL — Smash House</option>
-          <option>Pizza Reine Medium — Casa Napoli</option>
-          <option>Tacos Maxi — O'Tacos Street</option>
+          <option>Saumon grillé &amp; légumes</option>
+          <option>Bœuf grillé &amp; légumes</option>
+          <option>Bowl végétalien</option>
         </select>
       </div>
       <div class="form-group">
