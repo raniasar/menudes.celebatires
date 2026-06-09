@@ -908,20 +908,44 @@
     setTimeout(() => document.getElementById('prenom').focus(), 700);
   }
 
-  function envoyerCommande() {
+  async function envoyerCommande() {
     const prenom = document.getElementById('prenom').value.trim();
     const nom = document.getElementById('nom').value.trim();
     const telephone = document.getElementById('telephone').value.trim();
     const adresse = document.getElementById('adresse').value.trim();
     const repas = document.getElementById('repas').value;
     const livraison = document.getElementById('livraison').value;
-    if (!prenom || !telephone || !adresse) { alert('⚠️ Veuillez remplir au minimum votre prénom, téléphone et adresse.'); return; }
-    document.getElementById('modalTitle').textContent = 'Commande confirmée 🎉';
-    document.getElementById('modalDesc').textContent = `Merci ${prenom} ${nom} ! Votre commande pour "${repas}" a bien été reçue. Livraison : ${livraison}. Nous allons vous rappeler rapidement au ${telephone} pour confirmer.`;
-    document.getElementById('modalOverlay').classList.add('active');
-    ['prenom','nom','telephone','adresse','message'].forEach(id => document.getElementById(id).value = '');
-    document.getElementById('repas').selectedIndex = 0;
-    document.getElementById('livraison').selectedIndex = 0;
+    const message = document.getElementById('message').value.trim();
+
+    if (!prenom || !telephone || !adresse) {
+      alert('⚠️ Veuillez remplir au minimum votre prénom, téléphone et adresse.');
+      return;
+    }
+
+    const res = await fetch('https://formspree.io/f/xykajdnz', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        Prénom: prenom,
+        Nom: nom,
+        Téléphone: telephone,
+        Adresse: adresse,
+        Repas: repas,
+        Livraison: livraison,
+        Détails: message
+      })
+    });
+
+    if (res.ok) {
+      document.getElementById('modalTitle').textContent = 'Commande confirmée 🎉';
+      document.getElementById('modalDesc').textContent = `Merci ${prenom} ${nom} ! Votre commande pour "${repas}" a bien été reçue. Nous vous recontactons rapidement au ${telephone}.`;
+      document.getElementById('modalOverlay').classList.add('active');
+      ['prenom','nom','telephone','adresse','message'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('repas').selectedIndex = 0;
+      document.getElementById('livraison').selectedIndex = 0;
+    } else {
+      alert('❌ Une erreur est survenue. Réessayez ou contactez-nous directement.');
+    }
   }
 
   function fermerModal() { document.getElementById('modalOverlay').classList.remove('active'); }
